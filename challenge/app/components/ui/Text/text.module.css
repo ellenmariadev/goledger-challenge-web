@@ -1,0 +1,25 @@
+.root {
+  margin: 0;
+  color: inherit;
+}
+
+.titleXl {
+  font-size: var(--size-xl);
+}
+
+.titleLg {
+  font-size: var(--text-title-lg-size);
+  letter-spacing: 0.02em;
+}
+
+.bodyMd {
+  font-size: var(--text-body-md-size);
+}
+
+.bodySm {
+  font-size: var(--text-body-sm-size);
+}
+
+.label {
+  font-size: var(--text-label-size);
+}
