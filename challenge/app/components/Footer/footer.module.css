@@ -1,0 +1,20 @@
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 1.25rem;
+  border-top: 1px solid var(--clr-teal-50);
+  color: var(--clr-slate-500 );
+  font-family: var(--font-mono);
+  background-color: var(--clr-teal-200);
+}
+
+.separator {
+  align-self: stretch;
+  width: 0.0625rem;
+  min-height: var(--spacing-2);
+  background-color: var(--clr-teal-50);
+  flex-shrink: 0;
+  margin-right: var(--spacing-3);
+}
