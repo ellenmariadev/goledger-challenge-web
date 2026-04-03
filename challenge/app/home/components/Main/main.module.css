@@ -1,0 +1,92 @@
+.main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: clamp(var(--spacing-6), 12vw, 9.375rem)
+    clamp(var(--spacing-3), 10vw, 16.875rem);
+  overflow: hidden;
+}
+
+.welcome {
+  color: var(--clr-teal-20);
+}
+
+.title {
+  max-width: var(--width-md);
+  color: var(--clr-slate-50);
+  text-wrap: balance;
+  font-size: var(--size-xl);
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  margin-top: var(--spacing-xs);
+  color: var(--clr-teal-100);
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    filter: blur(var(--spacing-5));
+  }
+  50% {
+    opacity: 0.9;
+    filter: blur(var(--spacing-xs));
+  }
+}
+
+@keyframes glowPulseSecondary {
+  0%,
+  100% {
+    opacity: 0.4;
+    filter: blur(3.125rem);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(4.375rem);
+  }
+}
+
+.glow {
+  position: absolute;
+  width: min(42vw, 26.25rem);
+  aspect-ratio: 1;
+  left: 30%;
+  top: 0%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 213, 192, 0.45) 0%,
+    rgba(67, 93, 201, 0.2) 45%,
+    rgba(2, 39, 51, 0) 72%
+  );
+  filter: blur(2.5rem);
+  pointer-events: none;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.glowSecondary {
+  position: absolute;
+  width: min(30vw, 18.75rem);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(116, 82, 238) 0%,
+    rgba(80, 63, 211, 0.531) 40%,
+    rgba(98, 101, 255, 0.472) 70%
+  );
+  filter: blur(0.0625rem);
+  pointer-events: none;
+  animation: glowPulseSecondary 2s ease-in-out infinite;
+}

@@ -1,0 +1,10 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  background: var(--clr-teal-200);
+  color: var(--clr-teal-00);
+}
