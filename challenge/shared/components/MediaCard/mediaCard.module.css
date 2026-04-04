@@ -4,7 +4,6 @@
   gap: var(--spacing-2);
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--spacing-2);
   border: var(--border-width-1) solid var(--clr-teal-50);
   background: color-mix(in srgb, var(--clr-teal-300) 28%, transparent);
 }
@@ -14,21 +13,23 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--spacing-3);
+  padding: var(--spacing-2);
 }
 
 .cardTitle {
   color: var(--clr-teal-00);
+  font-weight: 400;
 }
 
 .cardBottom {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-1);
+  margin-left: .5rem;
 }
 
 .iconButton {
   width: 1.25rem;
   height: 1.25rem;
+  margin-bottom: var(--spacing-2);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -37,18 +38,39 @@
   background: transparent;
   color: var(--clr-teal-100);
   cursor: pointer;
+  margin-left: var(--spacing-1);
+}
+
+.removeButton {
+  height: 1.25rem;
+  width: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: var(--border-width-1) solid var(--clr-red-50);
+  background: transparent;
+  color: var(--clr-red-50);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.removeButton:hover {
+  background: color-mix(in srgb, var(--clr-red-50) 12%, transparent);
+  transform: scale(1.1);
 }
 
 .ratingBadge {
   margin-left: auto;
-  min-width: 1.5rem;
-  min-height: 1.5rem;
+  min-width: var(--spacing-4);
+  height: var(--spacing-3);
   padding: 0 var(--spacing-half);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: var(--text-label-size);
   color: var(--clr-slate-900);
+  place-self: end;
 }
 
 .ratingPreviewPopup {
@@ -63,7 +85,7 @@
 }
 
 .ratingPreviewTitle {
-  color: var(--color-text-primary);
+  color: var(--clr-teal-300);
 }
 
 .ratingPreviewDescription {

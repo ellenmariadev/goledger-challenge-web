@@ -5,7 +5,7 @@ import { Text } from "@/shared/ui/Text";
 import Tooltip from "@/shared/ui/Tooltip";
 import { getRatingByRecommendedAge } from "@/shared/utils/rating";
 import { PreviewCard } from "@base-ui/react/preview-card";
-import { Play } from "lucide-react";
+import { Play, X } from "lucide-react";
 import WatchlistDialog from "./components/WatchlistDialog";
 import styles from "./mediaCard.module.css";
 
@@ -13,10 +13,14 @@ const MediaCard = ({
   title,
   recommendedAge,
   watchlist = true,
+  onRemove,
+  tvShowKey,
 }: {
   title: string;
   recommendedAge: number;
   watchlist?: boolean;
+  onRemove?: () => void;
+  tvShowKey?: string;
 }) => {
   const rating = getRatingByRecommendedAge(recommendedAge);
 
@@ -31,21 +35,39 @@ const MediaCard = ({
         <Text variant="body-sm" as="h3" className={styles.cardTitle}>
           {title}
         </Text>
-        <Menu title={title} content={menuContent} />
+        {onRemove ? (
+          <button
+            type="button"
+            className={styles.removeButton}
+            onClick={onRemove}
+            aria-label={`remove ${title}`}
+          >
+            <X size={12} />
+          </button>
+        ) : (
+          <Menu title={title} content={menuContent} />
+        )}
       </div>
 
       <div className={styles.cardBottom}>
         <Tooltip content="Details">
-          <button
+          <div
             className={styles.iconButton}
-            type="button"
+            role="button"
+            tabIndex={0}
             aria-label="details"
           >
             <Play size={12} />
-          </button>
+          </div>
         </Tooltip>
 
-        {watchlist && <WatchlistDialog title={title} />}
+        {watchlist && (
+          <WatchlistDialog
+            title={title}
+            tvShowKey={tvShowKey}
+            recommendedAge={recommendedAge}
+          />
+        )}
 
         <PreviewCard.Root>
           <PreviewCard.Trigger

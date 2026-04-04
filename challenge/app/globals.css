@@ -19,6 +19,9 @@
   --clr-teal-200: #002f39;
   --clr-teal-300: #00171b;
 
+  --clr-red-50: #ff8f8f;
+  --clr-red-100: #ff0000;
+
   /* FONT */
   --font-mono: var(--font-fira-code);
 

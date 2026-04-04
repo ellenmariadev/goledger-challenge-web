@@ -9,6 +9,8 @@
   background: transparent;
   color: var(--clr-teal-100);
   cursor: pointer;
+  margin-bottom: var(--spacing-2);
+  margin-left: var(--spacing-2);
 }
 
 .modalActions {

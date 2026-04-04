@@ -1,5 +1,5 @@
-import { api, type ApiRequestOptions } from "@/services/api";
-import { SearchApiResponse, SearchQueryPayload } from "@/shared/types/api.types";
+import { api } from "@/services/api";
+import { SearchApiResponse, SearchQueryPayload, ApiRequestOptions } from "@/shared/types/api.types";
 
 export async function search<TResponse>(
   payload: SearchQueryPayload,

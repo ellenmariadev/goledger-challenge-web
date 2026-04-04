@@ -8,9 +8,9 @@ import Tooltip from "@/shared/ui/Tooltip";
 import { normalizeString } from "@/shared/utils/normalizeString";
 import { Dialog, Separator } from "@base-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { Search as SearchIcon } from "lucide-react";
+import { ListVideo, Search as SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { ListVideo } from "lucide-react";
 import styles from "./watchlistDialog.module.css";
 
 type WatchlistSearchResult = SearchResult<"watchlist"> & {
@@ -18,13 +18,21 @@ type WatchlistSearchResult = SearchResult<"watchlist"> & {
   title: string;
 };
 
-const WatchlistDialog = ({ title }: { title: string }) => {
+const WatchlistDialog = ({
+  title,
+  tvShowKey,
+}: {
+  title: string;
+  tvShowKey?: string;
+}) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: watchlists = [] } = useQuery({
     queryKey: ["watchlist-search"],
-    queryFn: () => fetchSearchOptions<WatchlistSearchResult>({ assetType: "watchlist" }),
+    queryFn: () =>
+      fetchSearchOptions<WatchlistSearchResult>({ assetType: "watchlist" }),
     staleTime: 60_000,
     enabled: isOpen,
   });
@@ -36,6 +44,13 @@ const WatchlistDialog = ({ title }: { title: string }) => {
       normalizeString(`${w.title} ${w.description}`).includes(normalized)
     );
   }, [searchTerm, watchlists]);
+
+  function handleNewWatchlist() {
+    setIsOpen(false);
+    const url = new URL("/watchlist/new", window.location.origin);
+    if (tvShowKey) url.searchParams.set("preselect", tvShowKey);
+    router.push(url.pathname + url.search);
+  }
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -62,7 +77,11 @@ const WatchlistDialog = ({ title }: { title: string }) => {
           </div>
 
           <div className={styles.modalSearch}>
-            <SearchIcon size={14} className={styles.modalSearchIcon} aria-hidden />
+            <SearchIcon
+              size={14}
+              className={styles.modalSearchIcon}
+              aria-hidden
+            />
             <input
               type="text"
               value={searchTerm}
@@ -73,17 +92,17 @@ const WatchlistDialog = ({ title }: { title: string }) => {
             />
           </div>
 
-          <Button
-            variant="secondary"
-            size="xs"
-            onClick={() => console.log("create watchlist")}
-          >
+          <Button variant="secondary" size="xs" onClick={handleNewWatchlist}>
             + New watchlist
           </Button>
 
           <Separator className={styles.modalSeparator} />
 
-          <ul className={styles.watchlistList} role="listbox" aria-label="watchlists">
+          <ul
+            className={styles.watchlistList}
+            role="listbox"
+            aria-label="watchlists"
+          >
             {filteredWatchlists.length ? (
               filteredWatchlists.map((watchlist) => (
                 <li
@@ -93,12 +112,17 @@ const WatchlistDialog = ({ title }: { title: string }) => {
                   tabIndex={0}
                   className={styles.watchlistItem}
                   onClick={() => console.log("selected", watchlist)}
-                  onKeyDown={(e) => e.key === "Enter" && console.log("selected", watchlist)}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && console.log("selected", watchlist)
+                  }
                 >
                   <Text variant="label" className={styles.watchlistTitle}>
                     {watchlist.title}
                   </Text>
-                  <Text variant="body-sm" className={styles.watchlistDescription}>
+                  <Text
+                    variant="body-sm"
+                    className={styles.watchlistDescription}
+                  >
                     {watchlist.description}
                   </Text>
                 </li>
@@ -111,7 +135,9 @@ const WatchlistDialog = ({ title }: { title: string }) => {
           </ul>
 
           <div className={styles.modalActions}>
-            <Dialog.Close className={styles.modalCancelButton}>Cancel</Dialog.Close>
+            <Dialog.Close className={styles.modalCancelButton}>
+              Cancel
+            </Dialog.Close>
           </div>
         </Dialog.Popup>
       </Dialog.Portal>

@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchSearchOptions } from "@/services/search";
+import { Loading } from "@/shared/ui/Loading";
 import MediaCard from "@/shared/components/MediaCard/page";
 import Search from "@/shared/components/Search";
 import { TvSearchResult } from "@/shared/types/tvShows.types";
@@ -18,12 +19,18 @@ function useColumnCount(ref: React.RefObject<HTMLDivElement>) {
 
   useMemo(() => {
     if (typeof window === "undefined" || !ref.current) return;
-    const observer = new ResizeObserver(([{ contentRect: { width } }]) => {
-      setCols(width <= 592 ? 1 : width <= 832 ? 2 : width <= 1152 ? 3 : 4);
-    });
+    const observer = new ResizeObserver(
+      ([
+        {
+          contentRect: { width },
+        },
+      ]) => {
+        setCols(width <= 592 ? 1 : width <= 832 ? 2 : width <= 1152 ? 3 : 4);
+      }
+    );
     observer.observe(ref.current);
     return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return cols;
@@ -36,7 +43,7 @@ export default function Catalog() {
   const fetchTvShowsOptions = () =>
     fetchSearchOptions<TvSearchResult>({ assetType: "tvShows" });
 
-  const { data: searchOptions = [] } = useQuery({
+  const { data: searchOptions = [], isLoading } = useQuery({
     queryKey: ["tv-shows-search"],
     queryFn: fetchTvShowsOptions,
     staleTime: 60_000,
@@ -47,7 +54,9 @@ export default function Catalog() {
   const rows = useMemo(() => {
     const normalized = normalizeString(searchTerm);
     const filtered = normalized
-      ? searchOptions.filter((o) => normalizeString(o.title).includes(normalized))
+      ? searchOptions.filter((o) =>
+          normalizeString(o.title).includes(normalized)
+        )
       : searchOptions;
 
     const result: TvSearchResult[][] = [];
@@ -63,6 +72,8 @@ export default function Catalog() {
     estimateSize: () => ROW_HEIGHT,
     overscan: 3,
   });
+
+  if (isLoading) return <Loading />;
 
   return (
     <section className={styles.catalogArea}>
@@ -82,7 +93,13 @@ export default function Catalog() {
       </Text>
 
       <div ref={scrollRef} className={styles.scrollContainer}>
-        <div style={{ height: virtualizer.getTotalSize(), width: "100%", position: "relative" }}>
+        <div
+          style={{
+            height: virtualizer.getTotalSize(),
+            width: "100%",
+            position: "relative",
+          }}
+        >
           {virtualizer.getVirtualItems().map((virtualRow) => (
             <div
               key={virtualRow.key}
@@ -102,6 +119,7 @@ export default function Catalog() {
                     key={tvShow["@key"]}
                     title={tvShow.title}
                     recommendedAge={tvShow.recommendedAge}
+                    tvShowKey={tvShow["@key"]}
                   />
                 ))}
               </div>
