@@ -1,35 +1,34 @@
+"use client";
+
+import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
+import Tooltip from "@/shared/ui/Tooltip";
 import { getRatingByRecommendedAge } from "@/shared/utils/rating";
 import { PreviewCard } from "@base-ui/react/preview-card";
-import { ListVideo, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import WatchlistDialog from "./components/WatchlistDialog";
 import styles from "./mediaCard.module.css";
-import Tooltip from "@/shared/ui/Tooltip";
-import Menu from "@/shared/ui/Menu";
 
 const MediaCard = ({
   title,
   recommendedAge,
+  watchlist = true,
 }: {
   title: string;
   recommendedAge: number;
+  watchlist?: boolean;
 }) => {
   const rating = getRatingByRecommendedAge(recommendedAge);
 
   const menuContent = [
-    {
-      label: "Edit",
-      onClick: () => console.log("edit"),
-    },
-    {
-      label: "Delete",
-      onClick: () => console.log("delete"),
-    },
+    { label: "Edit", onClick: () => console.log("edit") },
+    { label: "Delete", onClick: () => console.log("delete") },
   ];
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} aria-label={title}>
       <div className={styles.cardTop}>
-        <Text variant="body-sm" className={styles.cardTitle}>
+        <Text variant="body-sm" as="h3" className={styles.cardTitle}>
           {title}
         </Text>
         <Menu title={title} content={menuContent} />
@@ -37,19 +36,16 @@ const MediaCard = ({
 
       <div className={styles.cardBottom}>
         <Tooltip content="Details">
-          <button className={styles.iconButton} type="button" aria-label="details">
-            <Play size={12} />
-          </button>
-        </Tooltip>
-        <Tooltip content="Add to watchlist">
           <button
             className={styles.iconButton}
             type="button"
-            aria-label="open watchlist"
+            aria-label="details"
           >
-            <ListVideo size={12} />
+            <Play size={12} />
           </button>
         </Tooltip>
+
+        {watchlist && <WatchlistDialog title={title} />}
 
         <PreviewCard.Root>
           <PreviewCard.Trigger

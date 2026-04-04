@@ -1,0 +1,154 @@
+.iconButton {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: var(--border-width-1) solid var(--clr-teal-100);
+  background: transparent;
+  color: var(--clr-teal-100);
+  cursor: pointer;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalCancelButton {
+  border: var(--border-width-1) solid var(--clr-teal-100);
+  border-radius: var(--spacing-half);
+  color: var(--clr-teal-100);
+  background: transparent;
+  padding: var(--spacing-half) var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.modalCancelButton:hover {
+  background: color-mix(in srgb, var(--clr-teal-100) 10%, transparent);
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 90;
+}
+
+.modalPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(90vw, 30rem);
+  max-height: min(80vh, 36rem);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3);
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  background: var(--clr-teal-200);
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+}
+
+.modalHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-half);
+}
+
+.modalTitle {
+  color: var(--clr-teal-00);
+}
+
+.modalSubtitle {
+  color: var(--clr-slate-500);
+}
+
+.modalSearch {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  min-height: var(--spacing-4);
+  padding: 0 var(--spacing-2);
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  color: var(--clr-slate-500);
+  background: color-mix(in srgb, var(--clr-teal-300) 18%, transparent);
+}
+
+.modalSearchIcon {
+  color: var(--clr-slate-500);
+  flex-shrink: 0;
+}
+
+.modalSearchInput {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--clr-slate-50);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm-size);
+  outline: none;
+}
+
+.modalSearchInput::placeholder {
+  color: var(--clr-slate-500);
+}
+
+.modalSeparator {
+  height: var(--border-width-1);
+  width: 100%;
+  border: 0;
+  background: color-mix(in srgb, var(--clr-teal-50) 50%, transparent);
+}
+
+.watchlistList {
+  min-height: 8rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.watchlistItem {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-half);
+  padding: var(--spacing-1) var(--spacing-2);
+  border: var(--border-width-1) solid
+    color-mix(in srgb, var(--clr-teal-50) 65%, transparent);
+  background: color-mix(in srgb, var(--clr-teal-300) 55%, transparent);
+  cursor: pointer;
+}
+
+.watchlistItem:hover {
+  background: color-mix(in srgb, var(--clr-teal-100) 10%, transparent);
+}
+
+.watchlistTitle {
+  color: var(--clr-teal-00);
+  font-family: var(--font-mono);
+}
+
+.watchlistDescription {
+  font-family: var(--font-mono);
+  color: var(--clr-slate-500);
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.emptyWatchlistState {
+  color: var(--clr-slate-500);
+}

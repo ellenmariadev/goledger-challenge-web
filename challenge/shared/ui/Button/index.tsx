@@ -18,6 +18,7 @@ const variantClass: Record<Variant, string> = {
 };
 
 const sizeClass: Record<Size, string> = {
+  xs: styles.xs,
   sm: styles.sm,
   md: styles.md,
   lg: styles.lg,

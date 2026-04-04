@@ -5,7 +5,6 @@
   font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   border-radius: var(--spacing-half);
   cursor: pointer;
   transition:
@@ -31,7 +30,9 @@
 .secondary {
   background-color: transparent;
   color: var(--clr-teal-100);
-  border: var(--border-width-2) solid var(--clr-teal-100);
+  border: var(--border-width-1) solid var(--clr-teal-100);
+  font-weight: 400;
+
 }
 
 .secondary:hover {
@@ -59,4 +60,9 @@
 .lg {
   padding: var(--spacing-1) var(--spacing-3);
   font-size: var(--size-xxs);
+}
+
+.xs {
+  padding: var(--spacing-half) var(--spacing-1);
+  font-size: var(--text-body-sm-size);
 }
