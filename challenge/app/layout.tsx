@@ -1,8 +1,9 @@
+import Footer from "@/shared/components/Footer";
+import Header from "@/shared/components/Header";
+import QueryProvider from "@/shared/providers/QueryProvider";
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 const firaCode = Fira_Code({
   variable: "--font-fira-code",
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${firaCode.variable}`}>
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <QueryProvider>
+          <Header />
+          {children}
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );
