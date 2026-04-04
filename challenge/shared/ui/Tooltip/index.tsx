@@ -5,15 +5,13 @@ const Tooltip = ({
   children,
   content,
 }: {
-  children: React.ReactNode;
+  children: React.ReactElement;
   content: React.ReactNode;
 }) => {
   return (
     <TooltipBase.Provider>
       <TooltipBase.Root>
-        <TooltipBase.Trigger className={styles.button}>
-          {children}
-        </TooltipBase.Trigger>
+        <TooltipBase.Trigger render={children} />
         <TooltipBase.Portal>
           <TooltipBase.Positioner sideOffset={10}>
             <TooltipBase.Popup className={styles.popup}>
