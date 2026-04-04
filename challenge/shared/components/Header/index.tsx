@@ -1,6 +1,6 @@
 "use client";
 
-import { Text } from "@/app/components/ui/Text";
+import { Text } from "@/shared/ui/Text";
 import { Tabs } from "@base-ui/react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./header.module.css";

@@ -1,4 +1,4 @@
-import { Text } from "@/app/components/ui/Text";
+import { Text } from "@/shared/ui/Text";
 import { Separator } from "@base-ui/react";
 import styles from "./footer.module.css";
 

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import Header from "@/app/components/Header";
+import Header from "@/shared/components/Header";
 
 const pushMock = jest.fn();
 let pathname = "/";
