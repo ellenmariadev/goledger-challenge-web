@@ -1,0 +1,33 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  background: var(--clr-teal-200);
+  color: var(--clr-teal-00);
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: var(--spacing-6);
+  padding: var(--spacing-3);
+  overflow: hidden;
+}
+
+@media (max-width: 72rem) {
+  .main {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+}
+
+@media (max-width: 37rem) {
+  .main {
+    padding: var(--spacing-2);
+  }
+}
