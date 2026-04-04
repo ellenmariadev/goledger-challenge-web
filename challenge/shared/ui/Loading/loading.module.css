@@ -1,0 +1,85 @@
+.loader {
+  height: 3.125rem;
+  width: 3.125rem;
+  position: relative;
+  margin: 0 auto;
+  place-self: center;
+}
+
+.block {
+  height: 0.625rem;
+  width: 0.625rem;
+  background-color: var(--clr-teal-100);
+  position: absolute;
+  opacity: 0;
+}
+
+.b_1 {
+  top: 0;
+  left: 0;
+  animation: load 2s infinite;
+  animation-delay: 0;
+}
+
+.b_2 {
+  top: 0;
+  left: 1.25rem;
+  animation: load 2s infinite;
+  animation-delay: 0.25s;
+}
+
+.b_3 {
+  top: 0;
+  right: 0;
+  animation: load 2s infinite;
+  animation-delay: 0.5s;
+}
+
+.b_4 {
+  top: 1.25rem;
+  right: 0;
+  animation: load 2s infinite;
+  animation-delay: 0.75s;
+}
+
+.b_5 {
+  bottom: 0;
+  right: 0;
+  animation: load 2s infinite;
+  animation-delay: 1s;
+}
+
+.b_6 {
+  bottom: 0;
+  left: 1.25rem;
+  animation: load 2s infinite;
+  animation-delay: 1.25s;
+}
+
+.b_7 {
+  bottom: 0;
+  left: 0;
+  animation: load 2s infinite;
+  animation-delay: 1.5s;
+}
+
+.b_8 {
+  top: 1.25rem;
+  left: 0;
+  animation: load 2s infinite;
+  animation-delay: 1.75s;
+}
+
+@keyframes load {
+  0% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
