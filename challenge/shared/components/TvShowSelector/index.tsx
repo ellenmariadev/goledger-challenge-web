@@ -59,6 +59,7 @@ export function TvShowSelector({
               <MediaCard
                 title={show.title}
                 recommendedAge={show.recommendedAge}
+                tvShowKey={show["@key"]}
                 watchlist={false}
                 onRemove={() => onRemove(show["@key"])}
               />

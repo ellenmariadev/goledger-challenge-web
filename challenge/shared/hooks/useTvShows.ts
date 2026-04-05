@@ -18,6 +18,16 @@ export function useReadAllTvShows() {
 const readTvShow = (key: string) =>
   readAsset<TvSearchResult>("tvShows", key);
 
+
+export function useTvShow(key: string) {
+  return useQuery({
+    queryKey: [...TV_SHOW_QUERY_KEY, key],
+    queryFn: () => readTvShow(key),
+    staleTime: 60_000,
+    enabled: !!key,
+  });
+}
+
 export function useReadTvShows(keys: string[]) {
   const results = useQueries({
     queries: keys.map((key) => ({
@@ -37,3 +47,4 @@ export function useReadTvShows(keys: string[]) {
     isFetching: results.some((result) => result.isFetching),
   };
 }
+

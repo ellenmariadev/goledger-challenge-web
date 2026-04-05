@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.tabBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  border-bottom: var(--border-width-1) solid var(--clr-teal-50);
+  padding-left: 4rem;
+  padding-right: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.tab {
+  padding: var(--spacing-2) 0;
+  background: transparent;
+  border: none;
+  color: var(--clr-slate-500);
+  font-family: var(--font-mono);
+  font-size: var(--size-xxs);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tab:hover {
+  color: var(--clr-teal-00);
+}
+
+.tab.active,
+.active {
+  color: var(--clr-teal-00);
+  border-bottom-color: var(--clr-teal-100);
+}
+
+.addButton {
+  background: var(--clr-teal-100);
+  border: none;
+  color: var(--clr-slate-900);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--spacing-half);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.addButton:hover {
+  opacity: 0.85;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}

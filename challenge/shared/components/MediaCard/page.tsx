@@ -6,6 +6,7 @@ import Tooltip from "@/shared/ui/Tooltip";
 import { getRatingByRecommendedAge } from "@/shared/utils/rating";
 import { PreviewCard } from "@base-ui/react/preview-card";
 import { Play, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import WatchlistDialog from "./components/WatchlistDialog";
 import styles from "./mediaCard.module.css";
 
@@ -24,6 +25,7 @@ const MediaCard = ({
   onEdit?: () => void;
   tvShowKey?: string;
 }) => {
+  const router = useRouter();
   const rating = getRatingByRecommendedAge(recommendedAge);
 
   const menuContent = [
@@ -53,14 +55,18 @@ const MediaCard = ({
 
       <div className={styles.cardBottom}>
         <Tooltip content="Details">
-          <div
+          <button
+            type="button"
             className={styles.iconButton}
-            role="button"
-            tabIndex={0}
             aria-label="details"
+            disabled={!tvShowKey}
+            onClick={() => {
+              if (!tvShowKey) return;
+              router.push(`/tv-shows/${encodeURIComponent(tvShowKey)}`);
+            }}
           >
             <Play size={12} />
-          </div>
+          </button>
         </Tooltip>
 
         {watchlist && (

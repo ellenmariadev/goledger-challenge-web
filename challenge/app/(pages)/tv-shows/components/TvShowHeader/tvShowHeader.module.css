@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-bottom: var(--spacing-4);
+  border-bottom: var(--border-width-1) solid var(--clr-teal-50);
+  background-color: var(--clr-teal-200);
+  padding: 4rem 6.5rem;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.title {
+  color: var(--clr-teal-00);
+}
+
+.description {
+  color: var(--clr-slate-500);
+  line-height: 1.6;
+  max-width: 60ch;
+}

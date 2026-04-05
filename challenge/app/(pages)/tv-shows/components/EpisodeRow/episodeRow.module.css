@@ -1,0 +1,49 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) var(--spacing-2);
+  border-bottom: var(--border-width-1) solid var(--clr-teal-50);
+}
+
+.index {
+  color: var(--clr-slate-500);
+  min-width: 1rem;
+  text-align: right;
+}
+
+.playButton {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  border: var(--border-width-1) solid var(--clr-teal-100);
+  background: transparent;
+  color: var(--clr-teal-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.code {
+  flex: 1;
+  color: var(--clr-teal-00);
+  font-family: var(--font-mono);
+}
+
+.rating {
+  color: var(--clr-slate-400);
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  color: var(--clr-slate-600);
+}
+
+.starFilled {
+  color: var(--clr-teal-100);
+}

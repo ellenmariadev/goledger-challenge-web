@@ -91,6 +91,7 @@ export function WatchlistDetail({ slug }: { slug: string }) {
               <MediaCard
                 title={show.title}
                 recommendedAge={show.recommendedAge}
+                tvShowKey={show["@key"]}
                 watchlist={false}
               />
               <Text variant="body-sm" className={styles.counter}>
