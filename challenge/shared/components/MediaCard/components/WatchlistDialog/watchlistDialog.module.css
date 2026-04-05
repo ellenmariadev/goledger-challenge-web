@@ -15,6 +15,7 @@
 
 .modalActions {
   display: flex;
+  gap: var(--spacing-1);
   justify-content: flex-end;
 }
 
@@ -124,7 +125,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-half);
+  gap: 0.35rem;
   padding: var(--spacing-1) var(--spacing-2);
   border: var(--border-width-1) solid
     color-mix(in srgb, var(--clr-teal-50) 65%, transparent);
@@ -133,6 +134,12 @@
 }
 
 .watchlistItem:hover {
+  background: color-mix(in srgb, var(--clr-teal-100) 10%, transparent);
+}
+
+.watchlistItemSelected {
+  position: relative;
+  border-color: var(--clr-teal-100);
   background: color-mix(in srgb, var(--clr-teal-100) 10%, transparent);
 }
 
@@ -153,4 +160,8 @@
 
 .emptyWatchlistState {
   color: var(--clr-slate-500);
+}
+
+.errorText {
+  color: var(--clr-red-200);
 }
