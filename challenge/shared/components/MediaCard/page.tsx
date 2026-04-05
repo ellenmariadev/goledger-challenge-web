@@ -14,18 +14,20 @@ const MediaCard = ({
   recommendedAge,
   watchlist = true,
   onRemove,
+  onEdit,
   tvShowKey,
 }: {
   title: string;
   recommendedAge: number;
   watchlist?: boolean;
   onRemove?: () => void;
+  onEdit?: () => void;
   tvShowKey?: string;
 }) => {
   const rating = getRatingByRecommendedAge(recommendedAge);
 
   const menuContent = [
-    { label: "Edit", onClick: () => console.log("edit") },
+    { label: "Edit", onClick: () => onEdit?.() },
     { label: "Delete", onClick: () => console.log("delete") },
   ];
 

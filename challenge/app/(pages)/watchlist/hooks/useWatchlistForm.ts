@@ -49,7 +49,11 @@ export function useWatchlistForm(options: WatchlistFormOptions) {
         ? createWatchlist
         : (data: Parameters<typeof updateWatchlist>[0]) => updateWatchlist(data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+        await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+
+      if (options.mode === "edit") {
+        await queryClient.invalidateQueries({ queryKey: ["watchlist", options.watchlistKey] });
+      }
       router.back();
     },
   });

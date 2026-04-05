@@ -54,7 +54,7 @@ export function WatchlistCard({
           )}
         </div>
         <Text variant="body-sm" className={styles.count}>
-          {watchlist.tvShows?.length ?? 0} films
+          {watchlist.tvShows?.length ?? 0} tv shows
         </Text>
       </div>
     </article>

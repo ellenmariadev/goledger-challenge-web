@@ -1,4 +1,4 @@
-import { AssetReference } from "./api.types";
+import { AssetReference, SearchResult } from "./api.types";
 
 export type WatchlistSearchResult = SearchResult<"watchlist"> & {
   description: string;
@@ -32,3 +32,7 @@ export type WatchlistUpdateAsset = {
   description?: string;
   tvShows?: AssetReference<"tvShows">[];
 };
+
+export type ReadWatchlistRespone = WatchlistSearchResult & {
+  tvShows: AssetReference<"tvShows">[];
+}

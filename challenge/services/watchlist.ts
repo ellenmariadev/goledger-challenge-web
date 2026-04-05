@@ -1,5 +1,11 @@
 import { api } from "@/services/api";
-import { CreateWatchlistInput, UpdateWatchlistInput, WatchlistAsset, WatchlistUpdateAsset } from "@/shared/types/watchlist.types";
+import type {
+  CreateWatchlistInput,
+  ReadWatchlistResponse,
+  UpdateWatchlistInput,
+  WatchlistAsset,
+  WatchlistUpdateAsset,
+} from "@/shared/types/watchlist.types";
 
 export async function createWatchlist({ title, description, tvShowKeys }: CreateWatchlistInput) {
   return api<unknown, { asset: WatchlistAsset[] }>("/invoke/createAsset", {
@@ -35,11 +41,7 @@ export async function updateWatchlist({ key, title, description, tvShowKeys }: U
 }
 
 export async function readWatchlist(key: string) {
-  return api<{
-    title: string;
-    description: string;
-    tvShows: { "@assetType": "tvShows"; "@key": string; title: string; recommendedAge: number }[];
-  }>(`/query/readAsset`, {
+  return api<ReadWatchlistResponse>(`/query/readAsset`, {
     method: "POST",
     body: {
       key: {
