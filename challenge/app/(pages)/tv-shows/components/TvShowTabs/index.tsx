@@ -38,7 +38,7 @@ export function TvShowTabs({ tvShowKey }: { tvShowKey: string }) {
             router.push(
               activeTab === "seasons"
                 ? `/tv-shows/season/new?tvShowKey=${encodeURIComponent(tvShowKey)}`
-                : "/tv-shows/episode/new"
+                : `/tv-shows/episode/new?tvShowKey=${encodeURIComponent(tvShowKey)}`
             )
           }
         >

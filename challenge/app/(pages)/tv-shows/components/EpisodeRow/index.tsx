@@ -3,6 +3,7 @@
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
 import { Play } from "lucide-react";
+import { useRouter } from "next/navigation";
 import styles from "./episodeRow.module.css";
 
 type Episode = {
@@ -19,8 +20,16 @@ export function EpisodeRow({
   episode: Episode;
   index: number;
 }) {
+  const router = useRouter();
+
   const menuContent = [
-    { label: "Edit", onClick: () => console.log("edit", episode.key) },
+    {
+      label: "Edit",
+      onClick: () =>
+        router.push(
+          `/tv-shows/episode/${encodeURIComponent(episode.key)}/edit`
+        ),
+    },
     { label: "Delete", onClick: () => console.log("delete", episode.key) },
   ];
 
@@ -37,7 +46,7 @@ export function EpisodeRow({
       </Text>
       <Text variant="body-sm" className={styles.rating}>
         [
-        {Array.from({ length: 6 }, (_, i) => (
+        {Array.from({ length: 5 }, (_, i) => (
           <span
             key={i}
             className={
