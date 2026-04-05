@@ -1,8 +1,7 @@
 import { fetchSearchOptions } from "@/services/search";
+import { WATCHLIST_QUERY_KEY } from "@/shared/constants/queryKey";
 import type { WatchlistSearchResult } from "@/shared/types/watchlist.types";
 import { useQuery } from "@tanstack/react-query";
-
-export const WATCHLIST_QUERY_KEY = ["watchlist-search"] as const;
 
 const fetchWatchlistOptions = () =>
   fetchSearchOptions<WatchlistSearchResult>({ assetType: "watchlist" });

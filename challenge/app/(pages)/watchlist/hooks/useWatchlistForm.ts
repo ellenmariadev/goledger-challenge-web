@@ -1,12 +1,11 @@
 import { WatchlistFormOptions } from "@/app/(pages)/watchlist/types/watchlist.types";
 import { createWatchlist, updateWatchlist } from "@/services/watchlist";
+import { WATCHLIST_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useTvShows } from "@/shared/hooks/useTvShows";
 import type { SelectedTvShow, TvSearchResult } from "@/shared/types/tvShows.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useMemo, useState } from "react";
-
-const WATCHLIST_QUERY_KEY = ["watchlist-search"];
 
 export function useWatchlistForm(options: WatchlistFormOptions) {
   const { data: allShows = [] } = useTvShows();

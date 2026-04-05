@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.newButton {
+  align-self: flex-end;
+}
+
 .scrollContainer {
   flex: 1;
   min-height: 0;

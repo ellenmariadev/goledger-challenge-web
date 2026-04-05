@@ -1,14 +1,16 @@
 "use client";
 
 import { fetchSearchOptions } from "@/services/search";
-import { Loading } from "@/shared/ui/Loading";
 import MediaCard from "@/shared/components/MediaCard/page";
 import Search from "@/shared/components/Search";
+import { useTvShows } from "@/shared/hooks/useTvShows";
 import { TvSearchResult } from "@/shared/types/tvShows.types";
+import { Button } from "@/shared/ui/Button";
+import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
 import { normalizeString } from "@/shared/utils/normalizeString";
-import { useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
 
@@ -37,17 +39,13 @@ function useColumnCount(ref: React.RefObject<HTMLDivElement>) {
 }
 
 export default function Catalog() {
+  const { data: searchOptions = [], isLoading } = useTvShows();
   const [searchTerm, setSearchTerm] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const fetchTvShowsOptions = () =>
     fetchSearchOptions<TvSearchResult>({ assetType: "tvShows" });
-
-  const { data: searchOptions = [], isLoading } = useQuery({
-    queryKey: ["tv-shows-search"],
-    queryFn: fetchTvShowsOptions,
-    staleTime: 60_000,
-  });
 
   const columnCount = useColumnCount(scrollRef);
 
@@ -92,6 +90,15 @@ export default function Catalog() {
         {rows.flat().length} results
       </Text>
 
+      <Button
+        className={styles.newButton}
+        variant={"secondary"}
+        size="xs"
+        onClick={() => router.push("/tv-shows/new")}
+      >
+        + new tv show
+      </Button>
+
       <div ref={scrollRef} className={styles.scrollContainer}>
         <div
           style={{
@@ -120,6 +127,9 @@ export default function Catalog() {
                     title={tvShow.title}
                     recommendedAge={tvShow.recommendedAge}
                     tvShowKey={tvShow["@key"]}
+                    onEdit={() =>
+                      router.push(`/watchlist/${tvShow["@key"]}/edit`)
+                    }
                   />
                 ))}
               </div>

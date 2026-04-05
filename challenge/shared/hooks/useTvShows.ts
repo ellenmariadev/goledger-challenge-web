@@ -1,8 +1,7 @@
 import { fetchSearchOptions } from "@/services/search";
+import { TV_SHOWS_QUERY_KEY } from "@/shared/constants/queryKey";
 import type { TvSearchResult } from "@/shared/types/tvShows.types";
 import { useQuery } from "@tanstack/react-query";
-
-export const TV_SHOWS_QUERY_KEY = ["tv-shows-search"] as const;
 
 const fetchTvShowsOptions = () =>
   fetchSearchOptions<TvSearchResult>({ assetType: "tvShows" });
