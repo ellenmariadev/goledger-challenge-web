@@ -6,18 +6,37 @@ import type { SelectedTvShow } from "@/shared/types/tvShows.types";
 import { useQuery } from "@tanstack/react-query";
 import { useWatchlistForm } from "../hooks/useWatchlistForm";
 import { useReadTvShows } from "@/shared/hooks/useTvShows";
+import { useWatchlists } from "@/shared/hooks/useWatchlist";
+import { useMemo } from "react";
+import { findWatchlistBySlug } from "@/shared/utils/watchlistSlug";
 
-export function EditWatchlistForm({ watchlistKey }: { watchlistKey: string }) {
+export function EditWatchlistForm({
+  watchlistSlug,
+}: {
+  watchlistSlug: string;
+}) {
+  const { data: watchlists = [], isLoading: isLoadingWatchlists } =
+    useWatchlists();
+
+  const matchedWatchlist = useMemo(
+    () => findWatchlistBySlug(watchlists, watchlistSlug),
+    [watchlists, watchlistSlug]
+  );
+
+  const watchlistKey = matchedWatchlist?.["@key"] ?? watchlistSlug;
+
   const { data: watchlist, isLoading } = useQuery({
     queryKey: ["watchlist", watchlistKey],
-    queryFn: () => readWatchlist(decodeURIComponent(watchlistKey)),
+    queryFn: () => readWatchlist(watchlistKey),
     staleTime: 60_000,
+    enabled: !!watchlistKey,
   });
 
   const tvShowKeys = watchlist?.tvShows.map((s) => s["@key"]) ?? [];
   const { tvShows, isLoading: isLoadingShows } = useReadTvShows(tvShowKeys);
 
   const allLoaded =
+    !isLoadingWatchlists &&
     !isLoading &&
     !isLoadingShows &&
     !!watchlist &&

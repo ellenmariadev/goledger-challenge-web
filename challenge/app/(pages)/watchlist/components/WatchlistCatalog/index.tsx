@@ -4,11 +4,12 @@ import { WatchlistCard } from "@/shared/components/WatchlistCard";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
 import { useWatchlists } from "@/shared/hooks/useWatchlist";
 import { Button } from "@/shared/ui/Button";
+import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
+import { createWatchlistSlug } from "@/shared/utils/watchlistSlug";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import styles from "./watchlistCatalog.module.css";
-import { Loading } from "@/shared/ui/Loading";
 
 export function WatchlistCatalog() {
   const router = useRouter();
@@ -16,7 +17,6 @@ export function WatchlistCatalog() {
     useWatchlists();
   const { data: allShows = [], isLoading: loadingShows } = useReadAllTvShows();
 
-  
   const showsByKey = useMemo(
     () => new Map(allShows.map((show) => [show["@key"], show])),
     [allShows]
@@ -46,7 +46,22 @@ export function WatchlistCatalog() {
             key={watchlist["@key"]}
             watchlist={watchlist}
             showsByKey={showsByKey}
-            onEdit={() => router.push(`/watchlist/${watchlist["@key"]}/edit`)}
+            onOpen={() =>
+              router.push(
+                `/watchlist/${createWatchlistSlug(
+                  watchlist.title,
+                  watchlist["@key"]
+                )}`
+              )
+            }
+            onEdit={() =>
+              router.push(
+                `/watchlist/${createWatchlistSlug(
+                  watchlist.title,
+                  watchlist["@key"]
+                )}/edit`
+              )
+            }
           />
         ))}
       </div>

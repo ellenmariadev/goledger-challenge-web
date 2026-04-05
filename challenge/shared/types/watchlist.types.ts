@@ -33,6 +33,6 @@ export type WatchlistUpdateAsset = {
   tvShows?: AssetReference<"tvShows">[];
 };
 
-export type ReadWatchlistRespone = WatchlistSearchResult & {
+export type ReadWatchlistResponse = WatchlistSearchResult & {
   tvShows: AssetReference<"tvShows">[];
-}
+};

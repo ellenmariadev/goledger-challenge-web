@@ -6,16 +6,26 @@
   border: var(--border-width-1) solid var(--clr-teal-50);
   background: color-mix(in srgb, var(--clr-teal-300) 18%, transparent);
   transition: background 0.15s ease;
+  cursor: pointer;
+  outline: none;
 }
 
 .card:hover {
   background: color-mix(in srgb, var(--clr-teal-300) 28%, transparent);
 }
 
+.card:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--clr-teal-100) 35%, transparent);
+}
+
 .cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.menuContainer {
+  display: inline-flex;
 }
 
 .title {

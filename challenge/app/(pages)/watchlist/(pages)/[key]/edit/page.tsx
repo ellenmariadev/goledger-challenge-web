@@ -8,12 +8,12 @@ export default function EditWatchlistPage({
   params: Promise<{ key: string }>;
 }) {
   const { key } = use(params);
-  const decodedKey = decodeURIComponent(key);
+  const slug = decodeURIComponent(key);
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <EditWatchlistForm watchlistKey={decodedKey} />
+        <EditWatchlistForm watchlistSlug={slug} />
       </main>
     </div>
   );

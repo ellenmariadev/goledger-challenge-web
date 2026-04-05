@@ -1,7 +1,9 @@
 "use client";
 
+import type { TvSearchResult } from "@/shared/types/tvShows.types";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
+import { useMemo } from "react";
 import styles from "./watchlistCard.module.css";
 import { WatchlistCardProps } from "./watchlistCard.types";
 
@@ -9,6 +11,7 @@ export function WatchlistCard({
   watchlist,
   showsByKey,
   onEdit,
+  onOpen,
 }: WatchlistCardProps) {
   const menuContent = [
     { label: "Edit", onClick: onEdit },
@@ -27,13 +30,33 @@ export function WatchlistCard({
     [watchlist.tvShows, showsByKey]
   );
 
+  function handleCardKeyDown(event: React.KeyboardEvent<HTMLElement>) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onOpen();
+    }
+  }
+
   return (
-    <article className={styles.card} aria-label={watchlist.title}>
+    <article
+      className={styles.card}
+      aria-label={watchlist.title}
+      role="link"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={handleCardKeyDown}
+    >
       <div className={styles.cardHeader}>
         <Text variant="label" as="h3" className={styles.title}>
           {watchlist.title}
         </Text>
-        <Menu title={watchlist.title} content={menuContent} />
+        <div
+          className={styles.menuContainer}
+          onClick={(event) => event.stopPropagation()}
+          onKeyDown={(event) => event.stopPropagation()}
+        >
+          <Menu title={watchlist.title} content={menuContent} />
+        </div>
       </div>
 
       <div className={styles.cardBody}>

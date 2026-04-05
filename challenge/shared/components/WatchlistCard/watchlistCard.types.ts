@@ -5,4 +5,5 @@ export type WatchlistCardProps = {
   watchlist: WatchlistSearchResult;
   showsByKey: Map<string, TvSearchResult>;
   onEdit: () => void;
+  onOpen: () => void;
 };
