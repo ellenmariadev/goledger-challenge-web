@@ -1,0 +1,143 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  z-index: 40;
+}
+
+.backdrop[data-open] {
+  animation: fadeIn 0.15s ease forwards;
+}
+
+.backdrop[data-closed] {
+  animation: fadeOut 0.15s ease forwards;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  width: min(440px, calc(100vw - var(--spacing-6)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+  background: var(--clr-teal-300);
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.5);
+}
+
+.popup[data-open] {
+  animation: popIn 0.2s ease forwards;
+}
+
+.popup[data-closed] {
+  animation: popOut 0.15s ease forwards;
+}
+
+.iconWrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconWrapper[data-variant="danger"] {
+  background: color-mix(in srgb, var(--clr-red-50) 12%, transparent);
+  border: var(--border-width-1) solid var(--clr-red-50);
+  color: var(--clr-red-50);
+}
+
+.iconWrapper[data-variant="warning"] {
+  background: color-mix(in srgb, var(--clr-yellow-50) 12%, transparent);
+  border: var(--border-width-1) solid var(--clr-yellow-50);
+  color: var(--clr-yellow-50);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.title {
+  color: var(--clr-teal-00);
+  font-family: var(--font-mono);
+  font-size: var(--text-title-xs-size);
+  font-weight: 600;
+}
+
+.description {
+  color: var(--clr-slate-400);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm-size);
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  padding-top: var(--spacing-3);
+  border-top: var(--border-width-1) solid var(--clr-teal-50);
+}
+
+.confirmButton[data-variant="danger"] {
+  background: var(--clr-red-50);
+  border-color: var(--clr-red-50);
+  color: var(--clr-slate-900);
+}
+
+.confirmButton[data-variant="danger"]:hover {
+  background: color-mix(in srgb, var(--clr-red-50) 80%, black);
+  border-color: color-mix(in srgb, var(--clr-red-50) 80%, black);
+}
+
+.confirmButton[data-variant="warning"] {
+  background: var(--clr-yellow-50);
+  border-color: var(--clr-yellow-50);
+  color: var(--clr-slate-900);
+}
+
+.confirmButton[data-variant="warning"]:hover {
+  background: color-mix(in srgb, var(--clr-yellow-50) 80%, black);
+  border-color: color-mix(in srgb, var(--clr-yellow-50) 80%, black);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes popOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.95);
+  }
+}
