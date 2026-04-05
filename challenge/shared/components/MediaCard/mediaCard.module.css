@@ -1,4 +1,5 @@
 .card {
+  height: 100%;
   min-height: 4.5625rem;
   display: flex;
   gap: var(--spacing-2);
@@ -23,7 +24,7 @@
 
 .cardBottom {
   display: flex;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .iconButton {
@@ -44,6 +45,7 @@
 .removeButton {
   height: 1.25rem;
   width: 1.25rem;
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
