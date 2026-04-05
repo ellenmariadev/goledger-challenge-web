@@ -1,0 +1,27 @@
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.title {
+  color: var(--clr-teal-00);
+}
+
+.showing {
+  color: var(--clr-slate-500);
+  margin-top: var(--spacing-1);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}

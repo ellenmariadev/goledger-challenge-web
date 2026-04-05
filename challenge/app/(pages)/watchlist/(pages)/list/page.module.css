@@ -1,0 +1,17 @@
+.page {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--clr-teal-200);
+  color: var(--clr-teal-00);
+}
+
+.main {
+  flex: 1;
+  max-width: 56rem;
+  place-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-4) var(--spacing-3);
+}

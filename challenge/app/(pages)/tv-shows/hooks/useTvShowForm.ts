@@ -1,6 +1,6 @@
 import { TvShowFormOptions } from "@/app/(pages)/tv-shows/types/tvShowForm.types";
 import { createTvShow, updateTvShow } from "@/services/tvShow";
-import { TV_SHOWS_QUERY_KEY } from "@/shared/constants/queryKey";
+import { TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ export function useTvShowForm(options: TvShowFormOptions) {
         ? createTvShow
         : (data: Parameters<typeof updateTvShow>[0]) => updateTvShow(data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: TV_SHOWS_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
       router.back();
     },
   });

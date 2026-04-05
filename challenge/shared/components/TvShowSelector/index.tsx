@@ -10,7 +10,7 @@ import type {
 import { Text } from "@/shared/ui/Text";
 import { useMemo } from "react";
 import styles from "./tvShowSelect.module.css";
-import { TV_SHOWS_QUERY_KEY } from "@/shared/constants/queryKey";
+import { TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
 
 const fetchTvShowsOptions = () =>
   fetchSearchOptions<TvSearchResult>({ assetType: "tvShows" });
@@ -42,7 +42,7 @@ export function TvShowSelector({
         </Text>
         <Search
           className={styles.search}
-          queryKey={TV_SHOWS_QUERY_KEY}
+          queryKey={TV_SHOWS_ALL_QUERY_KEY}
           fetchOptions={fetchTvShowsOptions}
           getOptionLabel={(o) => o.title}
           getOptionKey={(o) => o["@key"]}

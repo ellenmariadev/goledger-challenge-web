@@ -3,7 +3,7 @@
 import { fetchSearchOptions } from "@/services/search";
 import MediaCard from "@/shared/components/MediaCard/page";
 import Search from "@/shared/components/Search";
-import { useTvShows } from "@/shared/hooks/useTvShows";
+import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
 import { TvSearchResult } from "@/shared/types/tvShows.types";
 import { Button } from "@/shared/ui/Button";
 import { Loading } from "@/shared/ui/Loading";
@@ -39,7 +39,7 @@ function useColumnCount(ref: React.RefObject<HTMLDivElement>) {
 }
 
 export default function Catalog() {
-  const { data: searchOptions = [], isLoading } = useTvShows();
+  const { data: searchOptions = [], isLoading } = useReadAllTvShows();
   const [searchTerm, setSearchTerm] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
