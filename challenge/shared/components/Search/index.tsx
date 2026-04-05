@@ -32,9 +32,7 @@ const Search = <TOption,>({
 
   const filteredOptions = inputValue.trim()
     ? options.filter((item) =>
-        getOptionLabel(item)
-          .toLowerCase()
-          .includes(inputValue.toLowerCase())
+        getOptionLabel(item).toLowerCase().includes(inputValue.toLowerCase())
       )
     : options;
 
@@ -55,7 +53,9 @@ const Search = <TOption,>({
       autoHighlight
       itemToStringValue={getOptionLabel}
     >
-      <Autocomplete.InputGroup className={rootClassName}>
+      <Autocomplete.InputGroup
+        className={`${rootClassName} ${styles.inputGroup}`}
+      >
         <SearchIcon size={14} className={styles.icon} aria-hidden />
         <Autocomplete.Input
           className={styles.input}

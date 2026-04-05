@@ -13,6 +13,11 @@ export type FetcherError = {
   message: string;
 };
 
+export type AssetReference<T extends string> = {
+  "@assetType": T;
+  "@key": string;
+};
+
 export type SearchQueryPayload = {
   query: {
     selector: Record<string, unknown>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchSearchOptions } from "@/services/search";
-import { SearchResult } from "@/shared/types/api.types";
+import { WatchlistSearchResult } from "@/shared/types/watchlist.types";
 import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
 import Tooltip from "@/shared/ui/Tooltip";
@@ -12,11 +12,6 @@ import { ListVideo, Search as SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import styles from "./watchlistDialog.module.css";
-
-type WatchlistSearchResult = SearchResult<"watchlist"> & {
-  description: string;
-  title: string;
-};
 
 const WatchlistDialog = ({
   title,
@@ -93,7 +88,7 @@ const WatchlistDialog = ({
           </div>
 
           <Button variant="secondary" size="xs" onClick={handleNewWatchlist}>
-            + New watchlist
+            + new watchlist
           </Button>
 
           <Separator className={styles.modalSeparator} />

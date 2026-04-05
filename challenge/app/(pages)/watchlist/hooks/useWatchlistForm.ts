@@ -1,0 +1,100 @@
+import { WatchlistFormOptions } from "@/app/(pages)/watchlist/types/watchlist.types";
+import { createWatchlist, updateWatchlist } from "@/services/watchlist";
+import { useTvShows } from "@/shared/hooks/useTvShows";
+import type { SelectedTvShow, TvSearchResult } from "@/shared/types/tvShows.types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { type FormEvent, useMemo, useState } from "react";
+
+const WATCHLIST_QUERY_KEY = ["watchlist-search"];
+
+export function useWatchlistForm(options: WatchlistFormOptions) {
+  const { data: allShows = [] } = useTvShows();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const preselectKey = options.mode === "create" ? searchParams.get("preselect") : null;
+
+  const initial = options.mode === "edit" ? options.initialData : undefined;
+
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [manualShows, setManualShows] = useState<SelectedTvShow[]>(
+    initial?.tvShows ?? []
+  );
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const selectedShows = useMemo(() => {
+    if (options.mode === "edit") return manualShows;
+    if (!preselectKey) return manualShows;
+    const preselected = allShows.find((s) => s["@key"] === preselectKey);
+    if (!preselected || manualShows.some((s) => s["@key"] === preselectKey)) return manualShows;
+    return [preselected, ...manualShows];
+  }, [options.mode, preselectKey, allShows, manualShows]);
+
+  function handleSelect(option: TvSearchResult) {
+    setManualShows((current) => [...current, option]);
+  }
+
+  function handleRemoveShow(showKey: string) {
+    if (options.mode === "create" && showKey === preselectKey) {
+      router.replace("/watchlist/new");
+      return;
+    }
+    setManualShows((current) => current.filter((s) => s["@key"] !== showKey));
+  }
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn:
+      options.mode === "create"
+        ? createWatchlist
+        : (data: Parameters<typeof updateWatchlist>[0]) => updateWatchlist(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+      router.back();
+    },
+  });
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return setFormErrors({ title: "Title is required." });
+
+    setFormErrors({});
+
+    try {
+      if (options.mode === "create") {
+        await mutateAsync({
+          title: trimmedTitle,
+          description: description.trim(),
+          tvShowKeys: selectedShows.map((s) => s["@key"]),
+        });
+      } else {
+        await mutateAsync({
+          key: options.watchlistKey,
+          title: trimmedTitle,
+          description: description.trim(),
+          tvShowKeys: selectedShows.map((s) => s["@key"]),
+        });
+      }
+    } catch (error) {
+      const { message } = (error ?? {}) as Partial<{ message: string }>;
+      setFormErrors({
+        "": typeof message === "string" ? message : "Something went wrong. Please try again.",
+      });
+    }
+  }
+
+  return {
+    title, setTitle,
+    description, setDescription,
+    selectedShows,
+    formErrors,
+    isPending,
+    handleSelect,
+    handleRemoveShow,
+    handleSubmit,
+    handleCancel: () => router.back(),
+  };
+}

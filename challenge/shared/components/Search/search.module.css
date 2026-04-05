@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  width: min(100%, 37rem);
+  width: 100%;
   min-height: var(--spacing-4);
   padding: 0 var(--spacing-2);
   border: var(--border-width-1) solid var(--clr-teal-50);
@@ -25,12 +25,16 @@
   outline: none;
 }
 
+.inputGroup:focus-within {
+  border: var(--border-width-1) solid var(--clr-teal-100);
+}
+
 .input::placeholder {
   color: var(--clr-slate-500);
 }
 
 .popup {
-  width: min(100vw - var(--spacing-6), 37rem);
+  width: var(--anchor-width);
   border: var(--border-width-1) solid var(--clr-teal-50);
   background: var(--clr-teal-200);
   box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.35);
