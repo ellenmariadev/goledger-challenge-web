@@ -1,7 +1,7 @@
 "use client";
 
 import { FormLayout } from "@/shared/components/FormLayout";
-import { TvShowSelector } from "@/shared/components/TvShowSelect";
+import { TvShowSelector } from "@/shared/components/TvShowSelector";
 import { Alert } from "@/shared/ui/Alert";
 import { Input } from "@/shared/ui/Input";
 import { WatchlistFormValues } from "./watchlistForm.types";
