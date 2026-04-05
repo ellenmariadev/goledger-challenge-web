@@ -8,8 +8,9 @@
 }
 
 .titleLg {
-  font-size: var(--text-title-lg-size);
+  font-size: var(--size-lg);
   letter-spacing: 0.02em;
+  font-weight: 500;
 }
 
 .bodyMd {
