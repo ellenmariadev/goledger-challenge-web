@@ -28,10 +28,7 @@ const MediaCard = ({
   const router = useRouter();
   const rating = getRatingByRecommendedAge(recommendedAge);
 
-  const menuContent = [
-    { label: "Edit", onClick: () => onEdit?.() },
-    { label: "Delete", onClick: () => console.log("delete") },
-  ];
+  const menuContent = onEdit ? [{ label: "Edit", onClick: onEdit }] : [];
 
   return (
     <article className={styles.card} aria-label={title}>
@@ -48,9 +45,9 @@ const MediaCard = ({
           >
             <X size={12} />
           </button>
-        ) : (
+        ) : onEdit ? (
           <Menu title={title} content={menuContent} />
-        )}
+        ) : null}
       </div>
 
       <div className={styles.cardBottom}>
