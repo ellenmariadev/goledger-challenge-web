@@ -1,29 +1,30 @@
 "use client";
 
-import { useTvShowForm } from "@/app/(pages)/tv-shows/new/hooks/useTvShowForm";
 import { FormLayout } from "@/shared/components/FormLayout";
 import { Alert } from "@/shared/ui/Alert";
 import { Input } from "@/shared/ui/Input";
 import NumberField from "@/shared/ui/NumberField";
+import type { TvShowFormValues } from "./tvShowForm.types";
 
-export function TvShowForm() {
-  const {
-    title,
-    setTitle,
-    description,
-    setDescription,
-    recommendedAge,
-    setRecommendedAge,
-    formErrors,
-    isPending,
-    handleSubmit,
-    handleCancel,
-  } = useTvShowForm();
-
+export function TvShowForm({
+  title,
+  setTitle,
+  description,
+  setDescription,
+  recommendedAge,
+  setRecommendedAge,
+  formErrors,
+  isPending,
+  handleSubmit,
+  handleCancel,
+  formTitle = "new tv show",
+  formSubtitle,
+  submitLabel = "save tv show",
+}: TvShowFormValues) {
   return (
     <FormLayout
-      title="new tv show"
-      subtitle="Fill in the details for your new tv show"
+      title={formTitle}
+      subtitle={formSubtitle}
       onSubmit={handleSubmit}
       actions={[
         {
@@ -33,15 +34,14 @@ export function TvShowForm() {
           disabled: isPending,
         },
         {
-          label: isPending ? "saving..." : "save",
+          label: isPending ? "saving..." : submitLabel,
           type: "submit",
           disabled: isPending,
         },
       ]}
     >
-      {Object.values(formErrors).map((error, i) => (
-        <Alert key={i} errors={{ form: error }} />
-      ))}
+      {Object.values(formErrors).length > 0 && <Alert errors={formErrors} />}
+
       <Input
         name="title"
         label="title"
@@ -58,17 +58,13 @@ export function TvShowForm() {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="write here"
-        required
       />
-
       <NumberField
-        name="recommendedAge"
         label="recommended age"
-        value={recommendedAge === "" ? 0 : recommendedAge}
+        value={recommendedAge}
         onValueChange={(val) => setRecommendedAge(val ?? 0)}
         min={0}
         max={99}
-        required
       />
     </FormLayout>
   );

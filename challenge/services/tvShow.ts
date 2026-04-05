@@ -16,3 +16,18 @@ export async function createTvShow({ title, description, recommendedAge }: Creat
     },
   });
 }
+
+export async function updateTvShow({ key, title, description, recommendedAge }: UpdateTvShowInput) {
+  return api<unknown, { update: object }>("/invoke/updateAsset", {
+    method: "PUT",
+    body: {
+      update: {
+        "@assetType": "tvShows",
+        "@key": key,
+        ...(title !== undefined && { title }),
+        ...(description !== undefined && { description }),
+        ...(recommendedAge !== undefined && { recommendedAge }),
+      },
+    },
+  });
+}

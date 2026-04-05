@@ -1,3 +1,2 @@
-export default function Watchlist() {
-  return <main></main>;
-}
+export { default } from "./(pages)/list/page";
+

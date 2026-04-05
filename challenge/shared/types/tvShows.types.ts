@@ -24,5 +24,12 @@ export type CreateTvShowInput = {
   recommendedAge: number;
 };
 
+export type UpdateTvShowInput = {
+  key: string;
+  title?: string;
+  description?: string;
+  recommendedAge?: number;
+};
+
 
 export type SelectedTvShow = Pick<TvSearchResult, "@key" | "title" | "recommendedAge">
