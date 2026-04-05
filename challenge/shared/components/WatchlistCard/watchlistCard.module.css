@@ -39,30 +39,6 @@
   gap: var(--spacing-3);
 }
 
-.avatars {
-  display: flex;
-  align-items: center;
-}
-
-.avatar {
-  width: var(--spacing-4);
-  height: var(--spacing-4);
-  border-radius: 100%;
-  background: color-mix(in srgb, var(--clr-teal-100) 20%, transparent);
-  border: 2px solid var(--clr-teal-200);
-  color: var(--clr-teal-100);
-  font-family: var(--font-mono);
-  font-size: var(--text-label-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: -0.5rem;
-}
-
-.avatar:first-child {
-  margin-left: 0;
-}
-
 .count {
   color: var(--clr-slate-500);
 }

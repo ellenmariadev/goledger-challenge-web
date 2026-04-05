@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 100%;
+  background: color-mix(in srgb, var(--clr-teal-100) 20%, transparent);
+  border: var(--border-width-1) solid var(--clr-teal-100);
+  color: var(--clr-teal-100);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline {
+  gap: var(--spacing-1);
+}
+
+.stacked .badge + .badge {
+  margin-left: -0.5rem;
+}
+
+.stacked .badge {
+  border-color: var(--clr-teal-200);
+}

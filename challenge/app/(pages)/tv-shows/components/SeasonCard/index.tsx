@@ -1,12 +1,13 @@
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
+import { InitialsPreview } from "@/shared/components/InitialsPreview";
 import styles from "./seasonCard.module.css";
 
 type Season = {
   key: string;
   name: string;
   episodeCount: number;
-  episodes: { key: string; initials: string }[];
+  episodes: { key: string; label: string }[];
 };
 
 export function SeasonCard({ season }: { season: Season }) {
@@ -24,13 +25,13 @@ export function SeasonCard({ season }: { season: Season }) {
         <Menu title={season.name} content={menuContent} />
       </div>
       <div className={styles.cardBody}>
-        <div className={styles.avatars}>
-          {season.episodes.map((ep) => (
-            <div key={ep.key} className={styles.avatar}>
-              {ep.initials}
-            </div>
-          ))}
-        </div>
+        <InitialsPreview
+          items={season.episodes.map((episode) => ({
+            key: episode.key,
+            label: episode.label,
+          }))}
+          variant="inline"
+        />
         <Text variant="body-sm" className={styles.count}>
           {season.episodeCount} episodes
         </Text>

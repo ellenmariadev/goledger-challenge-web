@@ -3,3 +3,8 @@
   flex-direction: column;
   min-height: 0;
 }
+
+.emptyState {
+  padding: var(--spacing-3) var(--spacing-2);
+  color: var(--clr-slate-500);
+}

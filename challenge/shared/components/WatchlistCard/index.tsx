@@ -1,6 +1,7 @@
 "use client";
 
 import type { TvSearchResult } from "@/shared/types/tvShows.types";
+import { InitialsPreview } from "@/shared/components/InitialsPreview";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
@@ -62,22 +63,13 @@ export function WatchlistCard({
         </div>
 
         <div className={styles.cardBody}>
-          <div className={styles.avatars}>
-            {previewShows.length > 0 ? (
-              previewShows.map((show) => (
-                <div
-                  key={show["@key"]}
-                  className={styles.avatar}
-                  title={show.title}
-                  aria-label={show.title}
-                >
-                  {show.title.slice(0, 2).toUpperCase()}
-                </div>
-              ))
-            ) : (
-              <div className={styles.avatar}>?</div>
-            )}
-          </div>
+          <InitialsPreview
+            items={previewShows.map((show) => ({
+              key: show["@key"],
+              label: show.title,
+            }))}
+            variant="stacked"
+          />
           <Text variant="body-sm" className={styles.count}>
             {watchlist.tvShows?.length ?? 0} tv shows
           </Text>
