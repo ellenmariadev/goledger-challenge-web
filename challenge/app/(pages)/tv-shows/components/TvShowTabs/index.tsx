@@ -34,7 +34,13 @@ export function TvShowTabs({ tvShowKey }: { tvShowKey: string }) {
         <Button
           className={styles.addButton}
           size="xs"
-          onClick={() => router.push("/tv-shows/new")}
+          onClick={() =>
+            router.push(
+              activeTab === "seasons"
+                ? `/tv-shows/season/new?tvShowKey=${encodeURIComponent(tvShowKey)}`
+                : "/tv-shows/episode/new"
+            )
+          }
         >
           {activeTab === "seasons" ? "new season +" : "new episode +"}
         </Button>

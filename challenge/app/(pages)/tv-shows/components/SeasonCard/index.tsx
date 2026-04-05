@@ -1,6 +1,9 @@
+"use client";
+
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
 import { InitialsPreview } from "@/shared/components/InitialsPreview";
+import { useRouter } from "next/navigation";
 import styles from "./seasonCard.module.css";
 
 type Season = {
@@ -11,8 +14,14 @@ type Season = {
 };
 
 export function SeasonCard({ season }: { season: Season }) {
+  const router = useRouter();
+
   const menuContent = [
-    { label: "Edit", onClick: () => console.log("edit", season.key) },
+    {
+      label: "Edit",
+      onClick: () =>
+        router.push(`/tv-shows/season/${encodeURIComponent(season.key)}/edit`),
+    },
     { label: "Delete", onClick: () => console.log("delete", season.key) },
   ];
 
