@@ -1,9 +1,10 @@
 "use client";
 
 import type { TvSearchResult } from "@/shared/types/tvShows.types";
+import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import styles from "./watchlistCard.module.css";
 import { WatchlistCardProps } from "./watchlistCard.types";
 
@@ -12,13 +13,13 @@ export function WatchlistCard({
   showsByKey,
   onEdit,
   onOpen,
+  onDelete,
 }: WatchlistCardProps) {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   const menuContent = [
     { label: "Edit", onClick: onEdit },
-    {
-      label: "Delete",
-      onClick: () => console.log("delete", watchlist["@key"]),
-    },
+    { label: "Delete", onClick: () => setConfirmOpen(true) },
   ];
 
   const previewShows = useMemo(
@@ -38,48 +39,62 @@ export function WatchlistCard({
   }
 
   return (
-    <article
-      className={styles.card}
-      aria-label={watchlist.title}
-      role="link"
-      tabIndex={0}
-      onClick={onOpen}
-      onKeyDown={handleCardKeyDown}
-    >
-      <div className={styles.cardHeader}>
-        <Text variant="label" as="h3" className={styles.title}>
-          {watchlist.title}
-        </Text>
-        <div
-          className={styles.menuContainer}
-          onClick={(event) => event.stopPropagation()}
-          onKeyDown={(event) => event.stopPropagation()}
-        >
-          <Menu title={watchlist.title} content={menuContent} />
+    <>
+      <article
+        className={styles.card}
+        aria-label={watchlist.title}
+        role="link"
+        tabIndex={0}
+        onClick={onOpen}
+        onKeyDown={handleCardKeyDown}
+      >
+        <div className={styles.cardHeader}>
+          <Text variant="label" as="h3" className={styles.title}>
+            {watchlist.title}
+          </Text>
+          <div
+            className={styles.menuContainer}
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
+          >
+            <Menu title={watchlist.title} content={menuContent} />
+          </div>
         </div>
-      </div>
 
-      <div className={styles.cardBody}>
-        <div className={styles.avatars}>
-          {previewShows.length > 0 ? (
-            previewShows.map((show) => (
-              <div
-                key={show["@key"]}
-                className={styles.avatar}
-                title={show.title}
-                aria-label={show.title}
-              >
-                {show.title.slice(0, 2).toUpperCase()}
-              </div>
-            ))
-          ) : (
-            <div className={styles.avatar}>?</div>
-          )}
+        <div className={styles.cardBody}>
+          <div className={styles.avatars}>
+            {previewShows.length > 0 ? (
+              previewShows.map((show) => (
+                <div
+                  key={show["@key"]}
+                  className={styles.avatar}
+                  title={show.title}
+                  aria-label={show.title}
+                >
+                  {show.title.slice(0, 2).toUpperCase()}
+                </div>
+              ))
+            ) : (
+              <div className={styles.avatar}>?</div>
+            )}
+          </div>
+          <Text variant="body-sm" className={styles.count}>
+            {watchlist.tvShows?.length ?? 0} tv shows
+          </Text>
         </div>
-        <Text variant="body-sm" className={styles.count}>
-          {watchlist.tvShows?.length ?? 0} tv shows
-        </Text>
-      </div>
-    </article>
+      </article>
+      <AlertDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete"
+        description={`"${watchlist.title}" watchlist will be permanently removed.`}
+        confirmLabel="delete"
+        variant="danger"
+        onConfirm={async () => {
+          await onDelete();
+          setConfirmOpen(false);
+        }}
+      />
+    </>
   );
 }

@@ -22,6 +22,8 @@
   --clr-red-50: #ff8f8f;
   --clr-red-100: #ff0000;
 
+  --clr-yellow-50: #f59e0b;
+
   /* FONT */
   --font-mono: var(--font-fira-code);
 

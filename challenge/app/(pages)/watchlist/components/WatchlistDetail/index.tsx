@@ -3,17 +3,19 @@
 import { readWatchlist } from "@/services/watchlist";
 import MediaCard from "@/shared/components/MediaCard/page";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
-import { useWatchlists } from "@/shared/hooks/useWatchlist";
+import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
+import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
 import { findWatchlistBySlug } from "@/shared/utils/watchlistSlug";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import styles from "./watchlistDetail.module.css";
 
 export function WatchlistDetail({ slug }: { slug: string }) {
   const router = useRouter();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const { data: watchlists = [] } = useWatchlists();
   const { data: allShows = [] } = useReadAllTvShows();
@@ -29,6 +31,8 @@ export function WatchlistDetail({ slug }: { slug: string }) {
     enabled: !!matchedWatchlist,
     staleTime: 60_000,
   });
+
+  const { mutateAsync: deleteWatchlistAsync } = useDeleteWatchlist();
 
   const showsByKey = useMemo(
     () => new Map(allShows.map((show) => [show["@key"], show])),
@@ -52,48 +56,64 @@ export function WatchlistDetail({ slug }: { slug: string }) {
   }
 
   return (
-    <section className={styles.detail}>
-      <header className={styles.header}>
-        <div>
-          <Text as="h1" variant="title-lg" className={styles.title}>
-            {watchlist.title}
-          </Text>
-          {watchlist.description && (
-            <Text variant="body-md" className={styles.description}>
-              {watchlist.description}
+    <>
+      <section className={styles.detail}>
+        <header className={styles.header}>
+          <div>
+            <Text as="h1" variant="title-lg" className={styles.title}>
+              {watchlist.title}
             </Text>
-          )}
-        </div>
-
-        <Menu
-          title={watchlist.title}
-          content={[
-            {
-              label: "Edit",
-              onClick: () => router.push(`/watchlist/${slug}/edit`),
-            },
-            {
-              label: "Delete",
-              onClick: () => console.log("delete", matchedWatchlist["@key"]),
-            },
-          ]}
-        />
-      </header>
-
-      <div className={styles.grid}>
-        {selectedShows.map((show, index) => (
-          <div key={show["@key"]} className={styles.gridItem}>
-            <MediaCard
-              title={show.title}
-              recommendedAge={show.recommendedAge}
-              watchlist={false}
-            />
-            <Text variant="body-sm" className={styles.counter}>
-              {index + 1}
-            </Text>
+            {watchlist.description && (
+              <Text variant="body-md" className={styles.description}>
+                {watchlist.description}
+              </Text>
+            )}
           </div>
-        ))}
-      </div>
-    </section>
+
+          <Menu
+            title={watchlist.title}
+            content={[
+              {
+                label: "Edit",
+                onClick: () => router.push(`/watchlist/${slug}/edit`),
+              },
+              {
+                label: "Delete",
+                onClick: () => setConfirmOpen(true),
+              },
+            ]}
+          />
+        </header>
+
+        <div className={styles.grid}>
+          {selectedShows.map((show, index) => (
+            <div key={show["@key"]} className={styles.gridItem}>
+              <MediaCard
+                title={show.title}
+                recommendedAge={show.recommendedAge}
+                watchlist={false}
+              />
+              <Text variant="body-sm" className={styles.counter}>
+                {index + 1}
+              </Text>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <AlertDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete"
+        description={`\"${watchlist.title}\" watchlist will be permanently removed.`}
+        confirmLabel="delete"
+        variant="danger"
+        onConfirm={async () => {
+          await deleteWatchlistAsync({ key: matchedWatchlist["@key"] });
+          setConfirmOpen(false);
+          router.push("/watchlist");
+        }}
+      />
+    </>
   );
 }

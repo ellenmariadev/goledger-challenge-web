@@ -1,6 +1,8 @@
 import { api } from "@/services/api";
+import { deleteAsset } from "@/services/delete";
 import type {
   CreateWatchlistInput,
+  DeleteWatchlistInput,
   ReadWatchlistResponse,
   UpdateWatchlistInput,
   WatchlistAsset,
@@ -50,4 +52,8 @@ export async function readWatchlist(key: string) {
       },
     },
   });
+}
+
+export async function deleteWatchlist({ key }: DeleteWatchlistInput) {
+  return deleteAsset("watchlist", key);
 }

@@ -2,7 +2,7 @@
 
 import { WatchlistCard } from "@/shared/components/WatchlistCard";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
-import { useWatchlists } from "@/shared/hooks/useWatchlist";
+import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
 import { Button } from "@/shared/ui/Button";
 import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
@@ -16,6 +16,7 @@ export function WatchlistCatalog() {
   const { data: watchlists = [], isLoading: loadingWatchlists } =
     useWatchlists();
   const { data: allShows = [], isLoading: loadingShows } = useReadAllTvShows();
+  const { mutateAsync: deleteWatchlistAsync } = useDeleteWatchlist();
 
   const showsByKey = useMemo(
     () => new Map(allShows.map((show) => [show["@key"], show])),
@@ -62,6 +63,7 @@ export function WatchlistCatalog() {
                 )}/edit`
               )
             }
+            onDelete={() => deleteWatchlistAsync({ key: watchlist["@key"] })}
           />
         ))}
       </div>

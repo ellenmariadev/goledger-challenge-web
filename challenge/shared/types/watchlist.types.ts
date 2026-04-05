@@ -25,6 +25,10 @@ export type UpdateWatchlistInput = {
   tvShowKeys?: string[];
 };
 
+export type DeleteWatchlistInput = {
+  key: string;
+};
+
 export type WatchlistUpdateAsset = {
   "@assetType": "watchlist";
   "@key": string;
@@ -35,4 +39,8 @@ export type WatchlistUpdateAsset = {
 
 export type ReadWatchlistResponse = WatchlistSearchResult & {
   tvShows: AssetReference<"tvShows">[];
+};
+
+export type DeleteWatchlistOptions = {
+  onSuccess?: () => void | Promise<void>;
 };

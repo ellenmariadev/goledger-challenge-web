@@ -6,4 +6,5 @@ export type WatchlistCardProps = {
   showsByKey: Map<string, TvSearchResult>;
   onEdit: () => void;
   onOpen: () => void;
+  onDelete: () => void | Promise<void>;
 };
