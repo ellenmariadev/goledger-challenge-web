@@ -1,8 +1,9 @@
 .list {
   display: flex;
   flex-direction: column;
+  height: 100%;
   overflow-y: auto;
-  max-height: 60vh;
+  padding: var(--spacing-2) var(--spacing-3);
   scrollbar-width: thin;
 }
 

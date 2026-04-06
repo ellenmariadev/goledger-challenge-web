@@ -1,10 +1,10 @@
 .page {
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   background: var(--clr-teal-200);
   color: var(--clr-teal-00);
+  overflow: hidden;
 }
 
 .main {
@@ -12,5 +12,8 @@
   max-width: 56rem;
   width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   padding: var(--spacing-4) var(--spacing-3);
 }

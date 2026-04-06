@@ -1,7 +1,7 @@
 .detail {
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--spacing-2), 2.8vw, var(--spacing-4));
   background-color: var(--clr-teal-300);
-  height: 100vh;
+  flex: 1;
+  min-height: 0;
 }

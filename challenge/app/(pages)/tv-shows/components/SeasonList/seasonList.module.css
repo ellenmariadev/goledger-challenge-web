@@ -1,8 +1,10 @@
 .list {
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
+  height: 100%;
   overflow-y: auto;
+  padding-left: var(--spacing-8);
+  padding-top: var(--spacing-2);
 }
 
 .emptyState {

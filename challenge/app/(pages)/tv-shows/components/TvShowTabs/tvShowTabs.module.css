@@ -1,6 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .tabBar {
@@ -11,6 +13,7 @@
   border-bottom: var(--border-width-1) solid var(--clr-teal-50);
   padding-left: clamp(1rem, 6vw, 4rem);
   padding-right: clamp(1rem, 3vw, 2rem);
+  flex-shrink: 0;
 }
 
 .tabs {
@@ -62,6 +65,7 @@
 }
 
 .content {
-  display: block;
-  overflow: visible;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }

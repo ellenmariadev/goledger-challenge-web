@@ -2,14 +2,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  padding: var(--spacing-2) clamp(1rem, 6vw, 4rem);
-  border-top: var(--border-width-1) solid var(--clr-teal-50);
+  padding-bottom: var(--spacing-2);
+  border-bottom: var(--border-width-1) solid var(--clr-teal-50);
+  margin-bottom: var(--spacing-2);
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-right: var(--spacing-2);
 }
 
 .name {
