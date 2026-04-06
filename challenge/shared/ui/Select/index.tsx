@@ -15,7 +15,13 @@ export function Select({
 }: SelectProps) {
   return (
     <div className={styles.field}>
-      <SelectBase.Root value={value} onValueChange={onChange} items={options}>
+      <SelectBase.Root
+        value={value}
+        onValueChange={(nextValue) => {
+          if (nextValue !== null) onChange(nextValue);
+        }}
+        items={options}
+      >
         <SelectBase.Label className={styles.label}>{label}</SelectBase.Label>
         <SelectBase.Trigger className={styles.trigger} aria-required={required}>
           <SelectBase.Value

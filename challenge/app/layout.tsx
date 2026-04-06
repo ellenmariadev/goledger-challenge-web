@@ -9,6 +9,7 @@ import "./globals.css";
 const firaCode = Fira_Code({
   variable: "--font-fira-code",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {

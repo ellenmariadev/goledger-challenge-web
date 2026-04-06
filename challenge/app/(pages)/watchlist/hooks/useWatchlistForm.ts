@@ -3,6 +3,7 @@ import { createWatchlist, updateWatchlist } from "@/services/watchlist";
 import { WATCHLIST_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
 import { useToast } from "@/shared/providers/Toast";
+import type { CreateWatchlistInput, UpdateWatchlistInput } from "@/shared/types/watchlist.types";
 import type { SelectedTvShow, TvSearchResult } from "@/shared/types/tvShows.types";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -46,11 +47,13 @@ export function useWatchlistForm(options: WatchlistFormOptions) {
     setManualShows((current) => current.filter((s) => s["@key"] !== showKey));
   }
 
+  const mutationFn = (data: CreateWatchlistInput | UpdateWatchlistInput) =>
+    options.mode === "create"
+      ? createWatchlist(data as CreateWatchlistInput)
+      : updateWatchlist(data as UpdateWatchlistInput);
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn:
-      options.mode === "create"
-        ? createWatchlist
-        : (data: Parameters<typeof updateWatchlist>[0]) => updateWatchlist(data),
+    mutationFn,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
 

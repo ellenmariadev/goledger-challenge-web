@@ -75,13 +75,7 @@ const MediaCard = ({
           </button>
         </Tooltip>
 
-        {watchlist && (
-          <WatchlistDialog
-            title={title}
-            tvShowKey={tvShowKey}
-            recommendedAge={recommendedAge}
-          />
-        )}
+        {watchlist && <WatchlistDialog title={title} tvShowKey={tvShowKey} />}
 
         <PreviewCard.Root>
           <PreviewCard.Trigger

@@ -20,9 +20,9 @@ export function useDeleteWatchlist(options: DeleteWatchlistOptions = {}) {
 
   return useMutation({
     mutationFn: deleteWatchlist,
-    onSuccess: async (...args) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
-      await options.onSuccess?.(...args);
+      await options.onSuccess?.();
     },
   });
 }

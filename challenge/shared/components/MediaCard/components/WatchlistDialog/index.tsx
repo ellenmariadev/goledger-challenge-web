@@ -57,7 +57,10 @@ const WatchlistDialog = ({
 
       return { watchlistKey, mergedKeys };
     },
-    onSuccess: async ({ watchlistKey, mergedKeys }) => {
+    onSuccess: async (result) => {
+      if (!result) return;
+
+      const { watchlistKey, mergedKeys } = result;
       const updatedWatchlist = {
         ...watchlists.find((watchlist) => watchlist["@key"] === watchlistKey),
         tvShows: mergedKeys.map((key) => ({

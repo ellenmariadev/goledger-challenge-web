@@ -2,6 +2,7 @@ import type { EpisodeFormOptions } from "@/app/(pages)/tv-shows/types/episodeFor
 import { createEpisode, updateEpisode } from "@/services/episode";
 import { EPISODES_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useToast } from "@/shared/providers/Toast";
+import type { CreateEpisodeInput, UpdateEpisodeInput } from "@/shared/types/episodes.types";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -24,7 +25,9 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
   const initial = options.mode === "edit" ? options.initialData : undefined;
 
   const [seasonKey, setSeasonKey] = useState(
-    options.mode === "create" ? options.seasons[0]?.key ?? "" : initial.seasonKey
+    options.mode === "create"
+      ? options.seasons[0]?.key ?? ""
+      : options.initialData.seasonKey
   );
   const [title, setTitle] = useState(initial?.title ?? "");
   const [releaseDate, setReleaseDate] = useState(
@@ -35,26 +38,29 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const episodeNumber = useMemo(() => {
-    if (options.mode === "edit") return initial.episodeNumber;
+    if (options.mode === "edit") return options.initialData.episodeNumber;
     if (!seasonKey) return 1;
 
     const episodes = options.existingEpisodesBySeason[seasonKey] ?? [];
     if (!episodes.length) return 1;
     return Math.max(...episodes) + 1;
-  }, [options, initial, seasonKey]);
+  }, [options, seasonKey]);
 
   const seasonLabel = useMemo(() => {
-    if (options.mode === "edit") return initial.seasonLabel;
+    if (options.mode === "edit") return options.initialData.seasonLabel;
     return options.seasons.find((season) => season.key === seasonKey)?.label ?? "";
-  }, [options, initial, seasonKey]);
+  }, [options, seasonKey]);
 
-  const tvShowTitle = options.mode === "create" ? options.tvShowTitle : initial.tvShowTitle;
+  const tvShowTitle =
+    options.mode === "create" ? options.tvShowTitle : options.initialData.tvShowTitle;
+
+  const mutationFn = (data: CreateEpisodeInput | UpdateEpisodeInput) =>
+    options.mode === "create"
+      ? createEpisode(data as CreateEpisodeInput)
+      : updateEpisode(data as UpdateEpisodeInput);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn:
-      options.mode === "create"
-        ? createEpisode
-        : (data: Parameters<typeof updateEpisode>[0]) => updateEpisode(data),
+    mutationFn,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: EPISODES_QUERY_KEY });
       toast.add({

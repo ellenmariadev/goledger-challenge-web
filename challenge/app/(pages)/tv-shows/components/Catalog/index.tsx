@@ -20,7 +20,7 @@ import styles from "./page.module.css";
 
 const ROW_HEIGHT = 280;
 
-function useColumnCount(ref: React.RefObject<HTMLDivElement>) {
+function useColumnCount(ref: React.RefObject<HTMLDivElement | null>) {
   const [cols, setCols] = useState(4);
 
   useMemo(() => {

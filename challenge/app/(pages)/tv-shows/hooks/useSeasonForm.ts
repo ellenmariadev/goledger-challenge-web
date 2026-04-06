@@ -2,6 +2,7 @@ import type { SeasonFormOptions } from "@/app/(pages)/tv-shows/types/seasonForm.
 import { createSeason, updateSeason } from "@/services/season";
 import { SEASONS_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useToast } from "@/shared/providers/Toast";
+import type { CreateSeasonInput, UpdateSeasonInput } from "@/shared/types/seasons.types";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -14,18 +15,22 @@ export function useSeasonForm(options: SeasonFormOptions) {
   const currentYear = new Date().getFullYear();
 
   const initial = options.mode === "edit" ? options.initialData : undefined;
-  const tvShowKey = options.mode === "create" ? options.tvShowKey : initial.tvShowKey;
-  const tvShowTitle = options.mode === "create" ? options.tvShowTitle : initial.tvShowTitle;
+  const tvShowKey =
+    options.mode === "create" ? options.tvShowKey : options.initialData.tvShowKey;
+  const tvShowTitle =
+    options.mode === "create" ? options.tvShowTitle : options.initialData.tvShowTitle;
 
   const [number, setNumber] = useState(initial?.number ?? 1);
   const [year, setYear] = useState(initial?.year ?? new Date().getFullYear());
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
+  const mutationFn = (data: CreateSeasonInput | UpdateSeasonInput) =>
+    options.mode === "create"
+      ? createSeason(data as CreateSeasonInput)
+      : updateSeason(data as UpdateSeasonInput);
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn:
-      options.mode === "create"
-        ? createSeason
-        : (data: Parameters<typeof updateSeason>[0]) => updateSeason(data),
+    mutationFn,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: SEASONS_QUERY_KEY });
       toast.add({

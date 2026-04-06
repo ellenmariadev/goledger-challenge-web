@@ -1,3 +1,5 @@
+import { SelectedTvShow } from "@/shared/types/tvShows.types";
+
 export type WatchlistFormInitialData = {
   title: string;
   description: string;

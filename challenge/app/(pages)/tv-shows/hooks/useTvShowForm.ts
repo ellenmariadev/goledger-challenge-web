@@ -2,6 +2,7 @@ import { TvShowFormOptions } from "@/app/(pages)/tv-shows/types/tvShowForm.types
 import { createTvShow, updateTvShow } from "@/services/tvShow";
 import { TV_SHOW_QUERY_KEY, TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useToast } from "@/shared/providers/Toast";
+import type { CreateTvShowInput, UpdateTvShowInput } from "@/shared/types/tvShows.types";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -19,11 +20,13 @@ export function useTvShowForm(options: TvShowFormOptions) {
   const [recommendedAge, setRecommendedAge] = useState<number>(initial?.recommendedAge ?? 0);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
+  const mutationFn = (data: CreateTvShowInput | UpdateTvShowInput) =>
+    options.mode === "create"
+      ? createTvShow(data as CreateTvShowInput)
+      : updateTvShow(data as UpdateTvShowInput);
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn:
-      options.mode === "create"
-        ? createTvShow
-        : (data: Parameters<typeof updateTvShow>[0]) => updateTvShow(data),
+    mutationFn,
     onSuccess: async () => {
       const trimmedTitle = title.trim();
       const trimmedDescription = description.trim();

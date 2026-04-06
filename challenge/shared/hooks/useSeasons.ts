@@ -20,10 +20,10 @@ export function useDeleteSeason(options: DeleteSeasonOptions = {}) {
 
   return useMutation({
     mutationFn: deleteSeason,
-    onSuccess: async (...args) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: SEASONS_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: EPISODES_QUERY_KEY });
-      await options.onSuccess?.(...args);
+      await options.onSuccess?.();
     },
   });
 }

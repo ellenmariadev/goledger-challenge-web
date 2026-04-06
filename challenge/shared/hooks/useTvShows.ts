@@ -54,10 +54,10 @@ export function useDeleteTvShow(options: DeleteTvShowOptions = {}) {
 
   return useMutation({
     mutationFn: deleteTvShow,
-    onSuccess: async (...args) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: TV_SHOW_QUERY_KEY });
-      await options.onSuccess?.(...args);
+      await options.onSuccess?.();
     },
   });
 }

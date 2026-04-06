@@ -3,6 +3,7 @@ import { AssetReference, SearchResult } from "./api.types";
 export type WatchlistSearchResult = SearchResult<"watchlist"> & {
   description: string;
   title: string;
+  tvShows?: AssetReference<"tvShows">[];
 };
 
 export type WatchlistAsset = {
