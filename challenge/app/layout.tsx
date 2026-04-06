@@ -12,9 +12,40 @@ const firaCode = Fira_Code({
   preload: false,
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const metadataBase = new URL(siteUrl ?? "http://localhost:3000");
+
+const defaultTitle = "GoLedger Challenge";
+const defaultDescription =
+  "A simple app to manage your TV shows and watchlists";
+
 export const metadata: Metadata = {
-  title: "GoLedger Challenge",
-  description: "A simple app to manage your TV shows and watchlists",
+  metadataBase,
+  title: {
+    default: defaultTitle,
+    template: `%s | ${defaultTitle}`,
+  },
+  description: defaultDescription,
+  applicationName: defaultTitle,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    title: defaultTitle,
+    description: defaultDescription,
+    url: "/",
+    siteName: defaultTitle,
+  },
+  twitter: {
+    card: "summary",
+    title: defaultTitle,
+    description: defaultDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
