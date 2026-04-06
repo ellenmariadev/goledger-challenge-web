@@ -66,7 +66,7 @@ export function useSeasonForm(options: SeasonFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error) });
+      setFormErrors({ "": getErrorMessage(error).error });
     }
   }
 

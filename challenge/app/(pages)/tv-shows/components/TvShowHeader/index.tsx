@@ -3,11 +3,11 @@
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
 import { useRouter } from "next/navigation";
-import type { TvShow } from "@/services/tvShow";
+import type { TvSearchResult } from "@/shared/types/tvShows.types";
 import styles from "./tvShowHeader.module.css";
 
 type TvShowHeaderProps = {
-  tvShow: TvShow;
+  tvShow: TvSearchResult;
   tvShowKey: string;
 };
 

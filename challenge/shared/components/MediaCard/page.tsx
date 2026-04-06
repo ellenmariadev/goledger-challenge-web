@@ -16,6 +16,7 @@ const MediaCard = ({
   watchlist = true,
   onRemove,
   onEdit,
+  onDelete,
   tvShowKey,
 }: {
   title: string;
@@ -23,12 +24,16 @@ const MediaCard = ({
   watchlist?: boolean;
   onRemove?: () => void;
   onEdit?: () => void;
+  onDelete?: () => void;
   tvShowKey?: string;
 }) => {
   const router = useRouter();
   const rating = getRatingByRecommendedAge(recommendedAge);
 
-  const menuContent = onEdit ? [{ label: "Edit", onClick: onEdit }] : [];
+  const menuContent = [
+    ...(onEdit ? [{ label: "Edit", onClick: onEdit }] : []),
+    ...(onDelete ? [{ label: "Delete", onClick: onDelete }] : []),
+  ];
 
   return (
     <article className={styles.card} aria-label={title}>
@@ -45,7 +50,7 @@ const MediaCard = ({
           >
             <X size={12} />
           </button>
-        ) : onEdit ? (
+        ) : menuContent.length > 0 ? (
           <Menu title={title} content={menuContent} />
         ) : null}
       </div>

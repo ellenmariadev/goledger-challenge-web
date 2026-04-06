@@ -1,5 +1,11 @@
 import { api } from "@/services/api";
-import { CreateTvShowInput, TvShowAsset } from "@/shared/types/tvShows.types";
+import { deleteAsset } from "@/services/delete";
+import type {
+  CreateTvShowInput,
+  DeleteTvShowInput,
+  TvShowAsset,
+  UpdateTvShowInput,
+} from "@/shared/types/tvShows.types";
 
 export async function createTvShow({ title, description, recommendedAge }: CreateTvShowInput) {
   return api<unknown, { asset: TvShowAsset[] }>("/invoke/createAsset", {
@@ -30,4 +36,8 @@ export async function updateTvShow({ key, title, description, recommendedAge }: 
       },
     },
   });
+}
+
+export async function deleteTvShow({ key }: DeleteTvShowInput) {
+  return deleteAsset("tvShows", key);
 }

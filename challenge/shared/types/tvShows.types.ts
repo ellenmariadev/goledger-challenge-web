@@ -31,5 +31,13 @@ export type UpdateTvShowInput = {
   recommendedAge?: number;
 };
 
+export type DeleteTvShowInput = {
+  key: string;
+};
+
+export type DeleteTvShowOptions = {
+  onSuccess?: () => void | Promise<void>;
+};
+
 
 export type SelectedTvShow = Pick<TvSearchResult, "@key" | "title" | "recommendedAge">

@@ -1,8 +1,9 @@
 import { readAsset } from "@/services/read";
 import { fetchSearchOptions } from "@/services/search";
+import { deleteTvShow } from "@/services/tvShow";
 import { TV_SHOW_QUERY_KEY, TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
-import type { TvSearchResult } from "@/shared/types/tvShows.types";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import type { DeleteTvShowOptions, TvSearchResult } from "@/shared/types/tvShows.types";
+import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const fetchTvShowsOptions = () =>
   fetchSearchOptions<TvSearchResult>({ assetType: "tvShows" });
@@ -46,5 +47,18 @@ export function useReadTvShows(keys: string[]) {
     isError: results.some((result) => result.isError),
     isFetching: results.some((result) => result.isFetching),
   };
+}
+
+export function useDeleteTvShow(options: DeleteTvShowOptions = {}) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteTvShow,
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: TV_SHOW_QUERY_KEY });
+      await options.onSuccess?.(...args);
+    },
+  });
 }
 

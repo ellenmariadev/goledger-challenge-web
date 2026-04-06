@@ -1,6 +1,6 @@
 import { TvShowFormOptions } from "@/app/(pages)/tv-shows/types/tvShowForm.types";
 import { createTvShow, updateTvShow } from "@/services/tvShow";
-import { TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
+import { TV_SHOW_QUERY_KEY, TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,45 @@ export function useTvShowForm(options: TvShowFormOptions) {
         ? createTvShow
         : (data: Parameters<typeof updateTvShow>[0]) => updateTvShow(data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
+      const trimmedTitle = title.trim();
+      const trimmedDescription = description.trim();
+
+      if (options.mode === "edit") {
+        const tvShowQueryKey = [...TV_SHOW_QUERY_KEY, options.tvShowKey];
+
+        queryClient.setQueryData(TV_SHOWS_ALL_QUERY_KEY, (current: unknown) => {
+          if (!Array.isArray(current)) return current;
+
+          return current.map((tvShow) => {
+            if (!tvShow || typeof tvShow !== "object") return tvShow;
+
+            const currentTvShow = tvShow as Record<string, unknown>;
+            if (currentTvShow["@key"] !== options.tvShowKey) return tvShow;
+
+            return {
+              ...currentTvShow,
+              title: trimmedTitle,
+              description: trimmedDescription,
+              recommendedAge,
+            };
+          });
+        });
+
+        queryClient.setQueryData(tvShowQueryKey, (current: unknown) => {
+          if (!current || typeof current !== "object") return current;
+
+          const currentTvShow = current as Record<string, unknown>;
+          return {
+            ...currentTvShow,
+            title: trimmedTitle,
+            description: trimmedDescription,
+            recommendedAge,
+          };
+        });
+      } else {
+        await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
+      }
+
       router.back();
     },
   });
@@ -52,7 +90,7 @@ export function useTvShowForm(options: TvShowFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error) });
+      setFormErrors({ "": getErrorMessage(error).error });
     }
   }
 

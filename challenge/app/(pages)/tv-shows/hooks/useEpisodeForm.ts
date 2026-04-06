@@ -113,7 +113,7 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error) });
+      setFormErrors({ "": getErrorMessage(error).error });
     }
   }
 
