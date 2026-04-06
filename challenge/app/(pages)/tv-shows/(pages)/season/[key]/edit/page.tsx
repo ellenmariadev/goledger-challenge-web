@@ -1,4 +1,4 @@
-import { EditSeasonForm } from "@/app/(pages)/tv-shows/components/EditSeasonForm";
+import { EditSeasonForm } from "@/app/(pages)/tv-shows/components/Forms/EditSeasonForm";
 import { use } from "react";
 
 export default function EditSeasonPage({

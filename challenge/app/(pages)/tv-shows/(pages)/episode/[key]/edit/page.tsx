@@ -1,4 +1,4 @@
-import { EditEpisodeForm } from "@/app/(pages)/tv-shows/components/EditEpisodeForm";
+import { EditEpisodeForm } from "@/app/(pages)/tv-shows/components/Forms/EditEpisodeForm";
 import { use } from "react";
 
 export default function EditEpisodePage({

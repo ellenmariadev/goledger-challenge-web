@@ -1,4 +1,4 @@
-import { NewTvShowForm } from "@/app/(pages)/tv-shows/components/NewTvShowForm";
+import { NewTvShowForm } from "@/app/(pages)/tv-shows/components/Forms/NewTvShowForm";
 import BackgroundLayout from "@/shared/components/BackgroundLayout";
 import { Loading } from "@/shared/ui/Loading";
 import { Suspense } from "react";

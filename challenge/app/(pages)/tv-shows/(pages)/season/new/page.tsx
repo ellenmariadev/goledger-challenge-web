@@ -1,4 +1,4 @@
-import { NewSeasonForm } from "@/app/(pages)/tv-shows/components/NewSeasonForm";
+import { NewSeasonForm } from "@/app/(pages)/tv-shows/components/Forms/NewSeasonForm";
 import BackgroundLayout from "@/shared/components/BackgroundLayout";
 import { Loading } from "@/shared/ui/Loading";
 import { Suspense } from "react";

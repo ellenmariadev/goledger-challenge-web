@@ -1,4 +1,4 @@
-import { EditTvShowForm } from "@/app/(pages)/tv-shows/components/EditTvShowForm";
+import { EditTvShowForm } from "@/app/(pages)/tv-shows/components/Forms/EditTvShowForm";
 import BackgroundLayout from "@/shared/components/BackgroundLayout";
 import { use } from "react";
 
