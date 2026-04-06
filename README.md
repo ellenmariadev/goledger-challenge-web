@@ -1,14 +1,11 @@
 # <samp>GoLedger Challenge Web</samp>
 
-<samp>The application serves as the frontend layer, communicating with a Hyperledger Fabric-based backend API that handles asset management and data persistence.</samp>
-<samp>See more in challenge description.</samp>
-
-<samp> 🎨 See the layout in [***Figma***](https://www.figma.com/design/RcixBYImRHpRlDCVXDxErS/Go-Ledger-Challenge?node-id=1-2&t=FHd6ngnbyU5wQYrj-1).</samp>
+<samp>The application serves as the frontend layer, communicating with a Hyperledger Fabric-based backend API that handles asset management and data persistence.</samp> <samp> 🎨 See the layout in [***Figma***](https://www.figma.com/design/RcixBYImRHpRlDCVXDxErS/Go-Ledger-Challenge?node-id=1-2&t=FHd6ngnbyU5wQYrj-1).</samp>
 
 ### ○ <samp>DEPLOY</samp>
  [![Netlify Status](https://api.netlify.com/api/v1/badges/9a3f54e8-c589-4c9b-aa0f-b15e92cbd67c/deploy-status)](https://hero-ensinio.netlify.app
 )\
- <samp>Acesse o site **[aqui](https://tv-shows-goledger.netlify.app/)**.</samp>
+ <samp> Access website **[here](https://tv-shows-goledger.netlify.app/)**.</samp>
 
 ## <samp>CORE STACK</samp>
 
