@@ -1,9 +1,4 @@
 .page {
-  flex: 1;
-  width: 100%;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
   background: var(--clr-teal-200);
