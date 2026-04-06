@@ -3,8 +3,9 @@
 import { Text } from "@/shared/ui/Text";
 import { Tabs } from "@base-ui/react";
 import { usePathname, useRouter } from "next/navigation";
-import styles from "./header.module.css";
+import GoBack from "../GoBack";
 import { HEADER_TABS } from "./constants";
+import styles from "./header.module.css";
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,6 +17,8 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
+      {pathname !== "/" ? <GoBack /> : <span />}
+
       <Tabs.Root value={activeTab}>
         <Tabs.List className={styles.tabsList} aria-label="Primary navigation">
           {HEADER_TABS.map((tab) => (

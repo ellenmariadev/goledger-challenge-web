@@ -1,6 +1,7 @@
 .header {
   display: flex;
-  justify-content: flex-end;
+  align-items: stretch;
+  justify-content: space-between;
   border-bottom: var(--border-width-1) solid var(--clr-teal-50);
   background-color: var(--clr-teal-200);
 }

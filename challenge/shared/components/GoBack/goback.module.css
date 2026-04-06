@@ -1,0 +1,12 @@
+.goBack {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  margin-left: var(--spacing-6);
+  cursor: pointer;
+}
+
+.backButton {
+  color: var(--clr-teal-100);
+  align-self: center;
+}
