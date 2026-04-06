@@ -4,7 +4,7 @@ import { useDeleteTvShow } from "@/shared/hooks/useTvShows";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { useToast } from "@/shared/ui/Toast";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -55,6 +55,12 @@ export function TvShowHeader({ tvShow, tvShowKey }: TvShowHeaderProps) {
           try {
             await deleteTvShowAsync({ key: tvShowKey });
             setConfirmDeleteOpen(false);
+            toast.add({
+              title: "TV show deleted",
+              description: `\"${tvShow.title}\" was deleted successfully.`,
+              type: "success",
+              timeout: 3500,
+            });
             router.push("/tv-shows");
           } catch (error) {
             toast.add({

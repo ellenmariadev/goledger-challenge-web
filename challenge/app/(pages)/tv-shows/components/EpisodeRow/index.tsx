@@ -4,7 +4,7 @@ import { useDeleteEpisode } from "@/shared/hooks/useEpisodes";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { useToast } from "@/shared/ui/Toast";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { Play } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -79,6 +79,12 @@ export function EpisodeRow({
           try {
             await deleteEpisodeAsync({ key: episode.key });
             setConfirmDeleteOpen(false);
+            toast.add({
+              title: "Episode deleted",
+              description: `\"${episode.title}\" was deleted successfully.`,
+              type: "success",
+              timeout: 3500,
+            });
           } catch (error) {
             toast.add({
               title: "Delete failed",

@@ -2,7 +2,9 @@ import { WatchlistFormOptions } from "@/app/(pages)/watchlist/types/watchlist.ty
 import { createWatchlist, updateWatchlist } from "@/services/watchlist";
 import { WATCHLIST_QUERY_KEY } from "@/shared/constants/queryKey";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
+import { useToast } from "@/shared/providers/Toast";
 import type { SelectedTvShow, TvSearchResult } from "@/shared/types/tvShows.types";
+import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useMemo, useState } from "react";
@@ -10,6 +12,7 @@ import { type FormEvent, useMemo, useState } from "react";
 export function useWatchlistForm(options: WatchlistFormOptions) {
   const { data: allShows = [] } = useReadAllTvShows();
   const router = useRouter();
+  const toast = useToast();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const preselectKey = options.mode === "create" ? searchParams.get("preselect") : null;
@@ -49,11 +52,20 @@ export function useWatchlistForm(options: WatchlistFormOptions) {
         ? createWatchlist
         : (data: Parameters<typeof updateWatchlist>[0]) => updateWatchlist(data),
     onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
 
       if (options.mode === "edit") {
         await queryClient.invalidateQueries({ queryKey: ["watchlist", options.watchlistKey] });
       }
+      toast.add({
+        title: options.mode === "create" ? "Watchlist created" : "Watchlist updated",
+        description:
+          options.mode === "create"
+            ? "The watchlist was created successfully."
+            : "The watchlist was updated successfully.",
+        type: "success",
+        timeout: 3500,
+      });
       router.back();
     },
   });
@@ -82,9 +94,16 @@ export function useWatchlistForm(options: WatchlistFormOptions) {
         });
       }
     } catch (error) {
-      const { message } = (error ?? {}) as Partial<{ message: string }>;
+      const message = getErrorMessage(error).error;
       setFormErrors({
-        "": typeof message === "string" ? message : "Something went wrong. Please try again.",
+        "": message,
+      });
+      toast.add({
+        title: options.mode === "create" ? "Create failed" : "Update failed",
+        description: message,
+        type: "error",
+        priority: "high",
+        timeout: 5000,
       });
     }
   }

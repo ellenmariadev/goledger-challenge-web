@@ -1,6 +1,7 @@
 import { TvShowFormOptions } from "@/app/(pages)/tv-shows/types/tvShowForm.types";
 import { createTvShow, updateTvShow } from "@/services/tvShow";
 import { TV_SHOW_QUERY_KEY, TV_SHOWS_ALL_QUERY_KEY } from "@/shared/constants/queryKey";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { type FormEvent, useState } from "react";
 
 export function useTvShowForm(options: TvShowFormOptions) {
   const router = useRouter();
+  const toast = useToast();
   const queryClient = useQueryClient();
 
   const initial = options.mode === "edit" ? options.initialData : undefined;
@@ -62,6 +64,16 @@ export function useTvShowForm(options: TvShowFormOptions) {
         await queryClient.invalidateQueries({ queryKey: TV_SHOWS_ALL_QUERY_KEY });
       }
 
+      toast.add({
+        title: options.mode === "create" ? "TV show created" : "TV show updated",
+        description:
+          options.mode === "create"
+            ? "The TV show was created successfully."
+            : "The TV show was updated successfully.",
+        type: "success",
+        timeout: 3500,
+      });
+
       router.back();
     },
   });
@@ -90,7 +102,15 @@ export function useTvShowForm(options: TvShowFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error).error });
+      const message = getErrorMessage(error).error;
+      setFormErrors({ "": message });
+      toast.add({
+        title: options.mode === "create" ? "Create failed" : "Update failed",
+        description: message,
+        type: "error",
+        priority: "high",
+        timeout: 5000,
+      });
     }
   }
 

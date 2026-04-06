@@ -5,7 +5,7 @@ import { useDeleteSeason } from "@/shared/hooks/useSeasons";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { useToast } from "@/shared/ui/Toast";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -65,6 +65,12 @@ export function SeasonCard({ season }: { season: Season }) {
           try {
             await deleteSeasonAsync({ key: season.key });
             setConfirmDeleteOpen(false);
+            toast.add({
+              title: "Season deleted",
+              description: `\"${season.name}\" was deleted successfully.`,
+              type: "success",
+              timeout: 3500,
+            });
           } catch (error) {
             toast.add({
               title: "Delete failed",

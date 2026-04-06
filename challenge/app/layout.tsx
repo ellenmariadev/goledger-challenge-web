@@ -1,7 +1,7 @@
 import Footer from "@/shared/components/Footer";
 import Header from "@/shared/components/Header";
 import QueryProvider from "@/shared/providers/QueryProvider";
-import { ToastProvider } from "@/shared/ui/Toast";
+import { ToastProvider } from "@/shared/providers/Toast";
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import "./globals.css";

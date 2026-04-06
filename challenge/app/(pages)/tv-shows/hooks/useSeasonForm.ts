@@ -1,6 +1,7 @@
 import type { SeasonFormOptions } from "@/app/(pages)/tv-shows/types/seasonForm.types";
 import { createSeason, updateSeason } from "@/services/season";
 import { SEASONS_QUERY_KEY } from "@/shared/constants/queryKey";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { type FormEvent, useState } from "react";
 
 export function useSeasonForm(options: SeasonFormOptions) {
   const router = useRouter();
+  const toast = useToast();
   const queryClient = useQueryClient();
   const currentYear = new Date().getFullYear();
 
@@ -26,6 +28,15 @@ export function useSeasonForm(options: SeasonFormOptions) {
         : (data: Parameters<typeof updateSeason>[0]) => updateSeason(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: SEASONS_QUERY_KEY });
+      toast.add({
+        title: options.mode === "create" ? "Season created" : "Season updated",
+        description:
+          options.mode === "create"
+            ? "The season was created successfully."
+            : "The season was updated successfully.",
+        type: "success",
+        timeout: 3500,
+      });
       router.back();
     },
   });
@@ -66,7 +77,15 @@ export function useSeasonForm(options: SeasonFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error).error });
+      const message = getErrorMessage(error).error;
+      setFormErrors({ "": message });
+      toast.add({
+        title: options.mode === "create" ? "Create failed" : "Update failed",
+        description: message,
+        type: "error",
+        priority: "high",
+        timeout: 5000,
+      });
     }
   }
 

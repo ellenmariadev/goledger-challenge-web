@@ -1,6 +1,7 @@
 import type { EpisodeFormOptions } from "@/app/(pages)/tv-shows/types/episodeForm.types";
 import { createEpisode, updateEpisode } from "@/services/episode";
 import { EPISODES_QUERY_KEY } from "@/shared/constants/queryKey";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ function toIsoDate(value: string): string {
 
 export function useEpisodeForm(options: EpisodeFormOptions) {
   const router = useRouter();
+  const toast = useToast();
   const queryClient = useQueryClient();
 
   const initial = options.mode === "edit" ? options.initialData : undefined;
@@ -55,6 +57,15 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
         : (data: Parameters<typeof updateEpisode>[0]) => updateEpisode(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: EPISODES_QUERY_KEY });
+      toast.add({
+        title: options.mode === "create" ? "Episode created" : "Episode updated",
+        description:
+          options.mode === "create"
+            ? "The episode was created successfully."
+            : "The episode was updated successfully.",
+        type: "success",
+        timeout: 3500,
+      });
       router.back();
     },
   });
@@ -113,7 +124,15 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
         });
       }
     } catch (error) {
-      setFormErrors({ "": getErrorMessage(error).error });
+      const message = getErrorMessage(error).error;
+      setFormErrors({ "": message });
+      toast.add({
+        title: options.mode === "create" ? "Create failed" : "Update failed",
+        description: message,
+        type: "error",
+        priority: "high",
+        timeout: 5000,
+      });
     }
   }
 

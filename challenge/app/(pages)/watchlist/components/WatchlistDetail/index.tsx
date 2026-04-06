@@ -4,9 +4,11 @@ import { readWatchlist } from "@/services/watchlist";
 import MediaCard from "@/shared/components/MediaCard/page";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
 import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
+import { useToast } from "@/shared/providers/Toast";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
+import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { findBySlug } from "@/shared/utils/slug";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -15,6 +17,7 @@ import styles from "./watchlistDetail.module.css";
 
 export function WatchlistDetail({ slug }: { slug: string }) {
   const router = useRouter();
+  const toast = useToast();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const { data: watchlists = [] } = useWatchlists();
@@ -110,9 +113,25 @@ export function WatchlistDetail({ slug }: { slug: string }) {
         confirmLabel="delete"
         variant="danger"
         onConfirm={async () => {
-          await deleteWatchlistAsync({ key: matchedWatchlist["@key"] });
-          setConfirmOpen(false);
-          router.push("/watchlist");
+          try {
+            await deleteWatchlistAsync({ key: matchedWatchlist["@key"] });
+            setConfirmOpen(false);
+            toast.add({
+              title: "Watchlist deleted",
+              description: `\"${watchlist.title}\" was deleted successfully.`,
+              type: "success",
+              timeout: 3500,
+            });
+            router.push("/watchlist");
+          } catch (error) {
+            toast.add({
+              title: "Delete failed",
+              description: getErrorMessage(error).error,
+              type: "error",
+              priority: "high",
+              timeout: 5000,
+            });
+          }
         }}
       />
     </>

@@ -86,8 +86,15 @@ export default function Catalog() {
     if (!pendingDelete) return;
 
     try {
+      const deletedTitle = pendingDelete.title;
       await deleteTvShow({ key: pendingDelete.key });
       setPendingDelete(null);
+      toast.add({
+        title: "TV show deleted",
+        description: `\"${deletedTitle}\" was deleted successfully.`,
+        type: "success",
+        timeout: 3500,
+      });
     } catch (error) {
       setPendingDelete(null);
       toast.add({

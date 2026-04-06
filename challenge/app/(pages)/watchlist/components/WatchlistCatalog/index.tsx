@@ -3,9 +3,11 @@
 import { WatchlistCard } from "@/shared/components/WatchlistCard";
 import { useReadAllTvShows } from "@/shared/hooks/useTvShows";
 import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
+import { useToast } from "@/shared/providers/Toast";
 import { Button } from "@/shared/ui/Button";
 import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
+import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { createSlug } from "@/shared/utils/slug";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -13,6 +15,7 @@ import styles from "./watchlistCatalog.module.css";
 
 export function WatchlistCatalog() {
   const router = useRouter();
+  const toast = useToast();
   const { data: watchlists = [], isLoading: loadingWatchlists } =
     useWatchlists();
   const { data: allShows = [], isLoading: loadingShows } = useReadAllTvShows();
@@ -59,7 +62,25 @@ export function WatchlistCatalog() {
                 `/watchlist/${createSlug(watchlist.title, watchlist["@key"], WATCHLIST_SLUG_OPTIONS)}/edit`
               )
             }
-            onDelete={() => deleteWatchlistAsync({ key: watchlist["@key"] })}
+            onDelete={async () => {
+              try {
+                await deleteWatchlistAsync({ key: watchlist["@key"] });
+                toast.add({
+                  title: "Watchlist deleted",
+                  description: `\"${watchlist.title}\" was deleted successfully.`,
+                  type: "success",
+                  timeout: 3500,
+                });
+              } catch (error) {
+                toast.add({
+                  title: "Delete failed",
+                  description: getErrorMessage(error).error,
+                  type: "error",
+                  priority: "high",
+                  timeout: 5000,
+                });
+              }
+            }}
           />
         ))}
       </div>
