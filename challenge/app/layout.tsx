@@ -1,6 +1,7 @@
 import Footer from "@/shared/components/Footer";
 import Header from "@/shared/components/Header";
 import QueryProvider from "@/shared/providers/QueryProvider";
+import { ToastProvider } from "@/shared/ui/Toast";
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import "./globals.css";
@@ -24,9 +25,11 @@ export default function RootLayout({
     <html lang="en" className={`${firaCode.variable}`}>
       <body>
         <QueryProvider>
-          <Header />
-          {children}
-          <Footer />
+          <ToastProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ToastProvider>
         </QueryProvider>
       </body>
     </html>
