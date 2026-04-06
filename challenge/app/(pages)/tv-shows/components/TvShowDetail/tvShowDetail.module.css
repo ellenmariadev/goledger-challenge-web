@@ -3,5 +3,4 @@
   flex-direction: column;
   background-color: var(--clr-teal-300);
   flex: 1;
-  min-height: 0;
 }

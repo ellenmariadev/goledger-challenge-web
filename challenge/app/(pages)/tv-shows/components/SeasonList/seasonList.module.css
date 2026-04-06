@@ -12,3 +12,10 @@
   color: var(--clr-slate-500);
   text-align: center;
 }
+
+
+@media (max-width: 48rem) {
+  .list {
+    padding-left: 0;
+  }
+}

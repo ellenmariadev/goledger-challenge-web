@@ -4,7 +4,7 @@
   flex-direction: column;
   background: var(--clr-teal-200);
   color: var(--clr-teal-00);
-  overflow: hidden;
+  overflow: auto;
 }
 
 .main {

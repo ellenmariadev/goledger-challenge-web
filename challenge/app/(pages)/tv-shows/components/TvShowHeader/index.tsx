@@ -6,6 +6,7 @@ import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
 import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { TvSearchResult } from "@/shared/types/tvShows.types";
@@ -20,7 +21,11 @@ export function TvShowHeader({ tvShow, tvShowKey }: TvShowHeaderProps) {
   const router = useRouter();
   const toast = useToast();
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const { mutateAsync: deleteTvShowAsync } = useDeleteTvShow();
+
+  const hasLongDescription =
+    tvShow.description && tvShow.description.length > 150;
 
   const menuContent = [
     {
@@ -37,9 +42,37 @@ export function TvShowHeader({ tvShow, tvShowKey }: TvShowHeaderProps) {
           {tvShow.title}
         </Text>
         {tvShow.description && (
-          <Text variant="body-sm" className={styles.description}>
-            {tvShow.description}
-          </Text>
+          <div className={styles.descriptionWrapper}>
+            <Text
+              variant="body-sm"
+              className={`${styles.description} ${
+                !descriptionExpanded && hasLongDescription
+                  ? styles.truncated
+                  : ""
+              }`}
+            >
+              {tvShow.description}
+            </Text>
+            {hasLongDescription && (
+              <button
+                type="button"
+                className={styles.expandButton}
+                onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+              >
+                {descriptionExpanded ? (
+                  <>
+                    <span>less</span>
+                    <ChevronUp size={14} />
+                  </>
+                ) : (
+                  <>
+                    <span>more</span>
+                    <ChevronDown size={14} />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
         )}
       </div>
       <Menu title={tvShow.title} content={menuContent} />

@@ -7,6 +7,10 @@
   margin-bottom: var(--spacing-2);
 }
 
+.card:last-child {
+  border-bottom: none;
+}
+
 .cardHeader {
   display: flex;
   align-items: center;
@@ -26,4 +30,11 @@
 
 .count {
   color: var(--clr-slate-500);
+}
+
+
+@media (max-width: 48rem) {
+  .card {
+    padding-left: var(--spacing-3);
+  }
 }
