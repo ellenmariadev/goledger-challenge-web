@@ -2,11 +2,17 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-1);
-  margin-left: var(--spacing-6);
+  margin-left: clamp(var(--spacing-1), 2vw, var(--spacing-6));
   cursor: pointer;
 }
 
 .backButton {
   color: var(--clr-teal-100);
   align-self: center;
+}
+
+@media (max-width: 48rem) {
+  .backText {
+    display: none;
+  }
 }

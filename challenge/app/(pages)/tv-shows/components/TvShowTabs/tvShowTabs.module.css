@@ -1,23 +1,21 @@
 .container {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-height: 0;
 }
 
 .tabBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-2);
+  gap: clamp(var(--spacing-1), 1.8vw, var(--spacing-2));
   border-bottom: var(--border-width-1) solid var(--clr-teal-50);
-  padding-left: 4rem;
-  padding-right: 2rem;
+  padding-left: clamp(1rem, 6vw, 4rem);
+  padding-right: clamp(1rem, 3vw, 2rem);
 }
 
 .tabs {
   display: flex;
-  gap: var(--spacing-4);
+  gap: clamp(var(--spacing-2), 3vw, var(--spacing-4));
 }
 
 .tab {
@@ -51,7 +49,8 @@
   color: var(--clr-slate-900);
   font-family: var(--font-mono);
   font-size: var(--text-label-size);
-  padding: var(--spacing-1) var(--spacing-3);
+  padding: clamp(var(--spacing-half), 1.2vw, var(--spacing-1))
+    clamp(var(--spacing-2), 2vw, var(--spacing-3));
   border-radius: var(--spacing-half);
   cursor: pointer;
   transition: opacity 0.15s ease;
@@ -62,11 +61,6 @@
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
+  display: block;
+  overflow: visible;
 }
