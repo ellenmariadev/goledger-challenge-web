@@ -81,7 +81,7 @@ export function useEpisodeForm(options: EpisodeFormOptions) {
 
     const trimmedTitle = title.trim();
     const trimmedDescription = description.trim();
-    const normalizedRating = Math.max(0, Math.min(5, Math.trunc(rating || 0)));
+    const normalizedRating = Math.max(0, Number.isFinite(rating) ? rating : 0);
 
     if (options.mode === "create" && !seasonKey) {
       setFormErrors({ season: "Season is required." });
