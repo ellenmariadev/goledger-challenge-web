@@ -11,6 +11,10 @@ const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  moduleNameMapper: {
+    '^next/navigation$': '<rootDir>/test/mocks/navigation.ts',
+    '^@/(.*)$': '<rootDir>/$1',
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
