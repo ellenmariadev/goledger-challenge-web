@@ -44,3 +44,11 @@ export type UpdateEpisodeInput = {
   description?: string;
   rating?: number;
 };
+
+export type DeleteEpisodeInput = {
+  key: string;
+};
+
+export type DeleteEpisodeOptions = {
+  onSuccess?: () => void | Promise<void>;
+};

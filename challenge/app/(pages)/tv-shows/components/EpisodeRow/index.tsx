@@ -1,9 +1,14 @@
 "use client";
 
+import { useDeleteEpisode } from "@/shared/hooks/useEpisodes";
+import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
+import { useToast } from "@/shared/ui/Toast";
+import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { Play } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import styles from "./episodeRow.module.css";
 
 type Episode = {
@@ -21,6 +26,9 @@ export function EpisodeRow({
   index: number;
 }) {
   const router = useRouter();
+  const toast = useToast();
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const { mutateAsync: deleteEpisodeAsync } = useDeleteEpisode();
 
   const menuContent = [
     {
@@ -30,7 +38,7 @@ export function EpisodeRow({
           `/tv-shows/episode/${encodeURIComponent(episode.key)}/edit`
         ),
     },
-    { label: "Delete", onClick: () => console.log("delete", episode.key) },
+    { label: "Delete", onClick: () => setConfirmDeleteOpen(true) },
   ];
 
   return (
@@ -59,6 +67,29 @@ export function EpisodeRow({
         ] {episode.rating}
       </Text>
       <Menu title={episode.title} content={menuContent} />
+
+      <AlertDialog
+        open={confirmDeleteOpen}
+        onOpenChange={setConfirmDeleteOpen}
+        title="Delete"
+        description={`\"${episode.title}\" episode will be permanently removed.`}
+        confirmLabel="delete"
+        variant="danger"
+        onConfirm={async () => {
+          try {
+            await deleteEpisodeAsync({ key: episode.key });
+            setConfirmDeleteOpen(false);
+          } catch (error) {
+            toast.add({
+              title: "Delete failed",
+              description: getErrorMessage(error).error,
+              type: "error",
+              priority: "high",
+              timeout: 5000,
+            });
+          }
+        }}
+      />
     </article>
   );
 }

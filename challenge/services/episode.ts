@@ -1,6 +1,8 @@
 import { api } from "@/services/api";
+import { deleteAsset } from "@/services/delete";
 import type {
   CreateEpisodeInput,
+  DeleteEpisodeInput,
   EpisodeAsset,
   EpisodeUpdateAsset,
   UpdateEpisodeInput,
@@ -55,4 +57,8 @@ export async function updateEpisode({
     method: "PUT",
     body: { update },
   });
+}
+
+export async function deleteEpisode({ key }: DeleteEpisodeInput) {
+  return deleteAsset("episodes", key);
 }
