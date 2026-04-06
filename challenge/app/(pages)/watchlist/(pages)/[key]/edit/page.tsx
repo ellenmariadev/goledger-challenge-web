@@ -1,6 +1,7 @@
 import { EditWatchlistForm } from "@/app/(pages)/watchlist/components/EditWatchlistForm";
-import { use } from "react";
-import styles from "./page.module.css";
+import BackgroundLayout from "@/shared/components/BackgroundLayout";
+import { Loading } from "@/shared/ui/Loading";
+import { Suspense, use } from "react";
 
 export default function EditWatchlistPage({
   params,
@@ -11,10 +12,10 @@ export default function EditWatchlistPage({
   const slug = decodeURIComponent(key);
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <BackgroundLayout>
+      <Suspense fallback={<Loading />}>
         <EditWatchlistForm watchlistSlug={slug} />
-      </main>
-    </div>
+      </Suspense>
+    </BackgroundLayout>
   );
 }

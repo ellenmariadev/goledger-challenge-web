@@ -1,0 +1,115 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.label {
+  color: var(--clr-slate-400);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  cursor: pointer;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: color-mix(in srgb, var(--clr-teal-300) 18%, transparent);
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  color: var(--clr-slate-50);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm-size);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.trigger:hover {
+  border-color: var(--clr-teal-100);
+}
+
+.trigger[data-open] {
+  border-color: var(--clr-teal-100);
+}
+
+.value {
+  flex: 1;
+  text-align: left;
+  color: var(--clr-slate-50);
+}
+
+.value[data-placeholder] {
+  color: var(--clr-slate-500);
+}
+
+.icon {
+  color: var(--clr-slate-500);
+  display: flex;
+  align-items: center;
+  transition: transform 0.15s ease;
+}
+
+.trigger[data-open] .icon {
+  transform: rotate(180deg);
+}
+
+.positioner {
+  z-index: 50;
+}
+
+.popup {
+  width: var(--anchor-width);
+  background: var(--clr-teal-200);
+  border: var(--border-width-1) solid var(--clr-teal-50);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.list {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm-size);
+  color: var(--clr-slate-200);
+  cursor: pointer;
+  outline: none;
+  transition: background 0.1s ease;
+}
+
+.item[data-highlighted] {
+  background: color-mix(in srgb, var(--clr-teal-100) 12%, transparent);
+  color: var(--clr-teal-00);
+}
+
+.itemIndicator {
+  display: flex;
+  align-items: center;
+  width: 0.75rem;
+  flex-shrink: 0;
+}
+
+.itemText {
+  flex: 1;
+}
+
+.scrollArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1);
+  color: var(--clr-slate-500);
+  cursor: default;
+  background: var(--clr-teal-200);
+}

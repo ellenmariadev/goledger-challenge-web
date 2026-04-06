@@ -1,11 +1,14 @@
+import { NewWatchlistForm } from "@/app/(pages)/watchlist/components/NewWatchlistForm";
+import BackgroundLayout from "@/shared/components/BackgroundLayout";
 import { Loading } from "@/shared/ui/Loading";
 import { Suspense } from "react";
-import { NewWatchlistForm } from "@/app/(pages)/watchlist/components/NewWatchlistForm";
 
 export default function NewWatchlistPage() {
   return (
-    <Suspense fallback={<Loading />}>
-      <NewWatchlistForm />
-    </Suspense>
+    <BackgroundLayout>
+      <Suspense fallback={<Loading />}>
+        <NewWatchlistForm />
+      </Suspense>
+    </BackgroundLayout>
   );
 }
