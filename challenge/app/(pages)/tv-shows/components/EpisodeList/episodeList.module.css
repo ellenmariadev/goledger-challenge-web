@@ -1,7 +1,9 @@
 .list {
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  overflow-y: auto;
+  max-height: 60vh;
+  scrollbar-width: thin;
 }
 
 .emptyState {

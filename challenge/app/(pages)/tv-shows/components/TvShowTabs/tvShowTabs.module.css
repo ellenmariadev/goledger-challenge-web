@@ -24,7 +24,8 @@
   border: none;
   color: var(--clr-slate-500);
   font-family: var(--font-mono);
-  font-size: var(--size-xxs);
+  font-size: var(--text-body-md-size);
+  font-weight: 600;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;

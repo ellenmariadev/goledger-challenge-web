@@ -59,7 +59,7 @@ export function EditEpisodeForm({ episodeKey }: { episodeKey: string }) {
   return (
     <EpisodeForm
       {...form}
-      formTitle="new/edit episode"
+      formTitle="edit episode"
       formSubtitle="Update episode details for this season."
       submitLabel="save"
     />

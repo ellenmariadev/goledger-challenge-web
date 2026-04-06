@@ -54,7 +54,7 @@ function EditSeasonFormInner({
   return (
     <SeasonForm
       {...form}
-      formTitle="new/edit season"
+      formTitle="edit season"
       formSubtitle="Update season details for this TV show."
       submitLabel="save"
     />

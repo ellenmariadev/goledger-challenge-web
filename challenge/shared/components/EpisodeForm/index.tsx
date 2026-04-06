@@ -5,8 +5,8 @@ import { Alert } from "@/shared/ui/Alert";
 import { Input } from "@/shared/ui/Input";
 import NumberField from "@/shared/ui/NumberField";
 import { Text } from "@/shared/ui/Text";
-import type { EpisodeFormValues } from "./episodeForm.types";
 import styles from "./episodeForm.module.css";
+import type { EpisodeFormValues } from "./episodeForm.types";
 
 export function EpisodeForm({
   tvShowTitle,
@@ -27,7 +27,7 @@ export function EpisodeForm({
   isPending,
   handleSubmit,
   handleCancel,
-  formTitle = "new/edit episode",
+  formTitle = "new episode",
   formSubtitle = "Create or update episode details.",
   submitLabel = "save",
 }: EpisodeFormValues) {
@@ -54,14 +54,7 @@ export function EpisodeForm({
         <Alert key={i} errors={{ form: error }} />
       ))}
 
-      <div className={styles.infoBlock}>
-        <Text as="span" variant="label" className={styles.infoLabel}>
-          tv show
-        </Text>
-        <span className={styles.infoBadge}>{tvShowTitle}</span>
-      </div>
-
-      {setSeasonKey ? (
+      {setSeasonKey && (
         <label className={styles.field}>
           <Text as="span" variant="label" className={styles.infoLabel}>
             season
@@ -82,21 +75,11 @@ export function EpisodeForm({
             ))}
           </select>
         </label>
-      ) : (
-        <div className={styles.infoBlock}>
-          <Text as="span" variant="label" className={styles.infoLabel}>
-            season
-          </Text>
-          <span className={styles.infoBadge}>{seasonLabel ?? "-"}</span>
-        </div>
       )}
 
-      <div className={styles.infoBlock}>
-        <Text as="span" variant="label" className={styles.infoLabel}>
-          episode number
-        </Text>
-        <span className={styles.infoBadge}>{episodeNumber}</span>
-      </div>
+      <Text variant="body-sm" className={styles.infoBadge}>
+        {tvShowTitle} - Episode {episodeNumber} - {seasonLabel}
+      </Text>
 
       <Input
         name="releaseDate"

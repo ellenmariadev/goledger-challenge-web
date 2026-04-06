@@ -99,7 +99,7 @@ function NewEpisodeFormInner({
   return (
     <EpisodeForm
       {...form}
-      formTitle="new/edit episode"
+      formTitle="new episode"
       formSubtitle="Create a new episode for this TV show."
       submitLabel="save"
     />
