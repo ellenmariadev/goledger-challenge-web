@@ -1,15 +1,31 @@
 .row {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
+  align-items: flex-start;
+  gap: var(--spacing-2);
   padding: var(--spacing-2) var(--spacing-2);
   border-bottom: var(--border-width-1) solid var(--clr-teal-50);
 }
 
+.leftSide {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-shrink: 0;
+}
+
 .index {
   color: var(--clr-slate-500);
-  min-width: 1rem;
+  min-width: 1.5rem;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .playButton {
@@ -26,24 +42,87 @@
   flex-shrink: 0;
 }
 
+.content {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
 .code {
-  flex: 1;
+  flex-shrink: 0;
+  color: var(--clr-teal-100);
+  font-family: var(--font-mono);
+  background: var(--clr-teal-300);
+  border-radius: 0.25rem;
+  font-size: 0.6875rem;
+}
+
+.title {
   color: var(--clr-teal-00);
   font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
 }
 
 .rating {
-  color: var(--clr-slate-400);
-  font-family: var(--font-mono);
   display: flex;
   align-items: center;
-  gap: 2px;
+}
+
+.ratingValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm-size);
+  color: var(--clr-slate-400);
 }
 
 .star {
   color: var(--clr-slate-600);
+  font-size: 0.875rem;
 }
 
 .starFilled {
   color: var(--clr-teal-100);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 48rem) {
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .leftSide {
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .rightSide {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .content {
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: calc(100% - 5rem);
+  }
+
+  .title {
+    white-space: normal;
+    overflow: visible;
+  }
+
+  .meta {
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 0.25rem;
+  }
 }

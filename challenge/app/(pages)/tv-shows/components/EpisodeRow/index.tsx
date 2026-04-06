@@ -8,7 +8,7 @@ import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { Play } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./episodeRow.module.css";
 
 type Episode = {
@@ -17,6 +17,8 @@ type Episode = {
   title: string;
   rating: number;
 };
+
+const MOBILE_BREAKPOINT = 768;
 
 export function EpisodeRow({
   episode,
@@ -28,7 +30,20 @@ export function EpisodeRow({
   const router = useRouter();
   const toast = useToast();
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { mutateAsync: deleteEpisodeAsync } = useDeleteEpisode();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const hasLongTitle = episode.title.length > 30;
 
   const menuContent = [
     {
@@ -43,30 +58,43 @@ export function EpisodeRow({
 
   return (
     <article className={styles.row}>
-      <Text variant="body-sm" className={styles.index}>
-        {index}
-      </Text>
-      <button type="button" className={styles.playButton} aria-label="play">
-        <Play size={12} />
-      </button>
-      <Text variant="body-sm" className={styles.code}>
-        {episode.code} - {episode.title}
-      </Text>
-      <Text variant="body-sm" className={styles.rating}>
-        [
-        {Array.from({ length: 5 }, (_, i) => (
-          <span
-            key={i}
-            className={
-              i < Math.floor(episode.rating) ? styles.starFilled : styles.star
-            }
-          >
-            ★
-          </span>
-        ))}
-        ] {episode.rating}
-      </Text>
-      <Menu title={episode.title} content={menuContent} />
+      <div className={styles.leftSide}>
+        <Text variant="body-sm" className={styles.index}>
+          {index}
+        </Text>
+        <button type="button" className={styles.playButton} aria-label="play">
+          <Play size={12} />
+        </button>
+        <div className={styles.content}>
+          <Text variant="body-sm" className={styles.code}>
+            {episode.code}
+          </Text>
+          <Text variant="body-sm" className={styles.title}>
+            {episode.title}
+          </Text>
+        </div>
+      </div>
+      <div className={styles.rightSide}>
+        {isMobile && <Menu title={episode.title} content={menuContent} />}
+        <div className={styles.meta}>
+          <Text variant="body-sm" className={styles.rating}>
+            {Array.from({ length: 5 }, (_, i) => (
+              <span
+                key={i}
+                className={
+                  i < Math.floor(episode.rating)
+                    ? styles.starFilled
+                    : styles.star
+                }
+              >
+                ★
+              </span>
+            ))}
+          </Text>
+          <span className={styles.ratingValue}>{episode.rating}</span>
+        </div>
+        {!isMobile && <Menu title={episode.title} content={menuContent} />}
+      </div>
 
       <AlertDialog
         open={confirmDeleteOpen}
