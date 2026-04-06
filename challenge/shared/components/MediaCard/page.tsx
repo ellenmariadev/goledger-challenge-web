@@ -9,6 +9,7 @@ import { Play, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import WatchlistDialog from "./components/WatchlistDialog";
 import styles from "./mediaCard.module.css";
+import { createSlug } from "@/shared/utils/slug";
 
 const MediaCard = ({
   title,
@@ -29,6 +30,7 @@ const MediaCard = ({
 }) => {
   const router = useRouter();
   const rating = getRatingByRecommendedAge(recommendedAge);
+  const TV_SHOW_SLUG_OPTIONS = { fallback: "tv-shows" };
 
   const menuContent = [
     ...(onEdit ? [{ label: "Edit", onClick: onEdit }] : []),
@@ -64,7 +66,9 @@ const MediaCard = ({
             disabled={!tvShowKey}
             onClick={() => {
               if (!tvShowKey) return;
-              router.push(`/tv-shows/${encodeURIComponent(tvShowKey)}`);
+              router.push(
+                `/tv-shows/${createSlug(title, tvShowKey, TV_SHOW_SLUG_OPTIONS)}`
+              );
             }}
           >
             <Play size={12} />

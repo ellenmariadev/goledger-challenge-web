@@ -2,13 +2,13 @@
 
 import { readWatchlist } from "@/services/watchlist";
 import { WatchlistForm } from "@/shared/components/WatchlistForm";
-import type { SelectedTvShow } from "@/shared/types/tvShows.types";
-import { useQuery } from "@tanstack/react-query";
-import { useWatchlistForm } from "../hooks/useWatchlistForm";
 import { useReadTvShows } from "@/shared/hooks/useTvShows";
 import { useWatchlists } from "@/shared/hooks/useWatchlist";
+import type { SelectedTvShow } from "@/shared/types/tvShows.types";
+import { findBySlug } from "@/shared/utils/slug";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { findWatchlistBySlug } from "@/shared/utils/watchlistSlug";
+import { useWatchlistForm } from "../hooks/useWatchlistForm";
 
 export function EditWatchlistForm({
   watchlistSlug,
@@ -19,7 +19,7 @@ export function EditWatchlistForm({
     useWatchlists();
 
   const matchedWatchlist = useMemo(
-    () => findWatchlistBySlug(watchlists, watchlistSlug),
+    () => findBySlug(watchlists, watchlistSlug),
     [watchlists, watchlistSlug]
   );
 

@@ -2,18 +2,30 @@
 
 import { useTvShowForm } from "@/app/(pages)/tv-shows/hooks/useTvShowForm";
 import { TvShowForm } from "@/shared/components/TvShowForm";
-import { useTvShow } from "@/shared/hooks/useTvShows";
+import { useReadAllTvShows, useTvShow } from "@/shared/hooks/useTvShows";
 import { Loading } from "@/shared/ui/Loading";
+import { findBySlug } from "@/shared/utils/slug";
+import { useMemo } from "react";
 
 export function EditTvShowForm({ tvShowKey }: { tvShowKey: string }) {
-  const { data: tvShow, isLoading } = useTvShow(tvShowKey);
+  const { data: tvShows = [], isLoading: isLoadingTvShows } =
+    useReadAllTvShows();
 
-  if (isLoading) return <Loading />;
+  const matchedTvShow = useMemo(
+    () => findBySlug(tvShows, tvShowKey),
+    [tvShows, tvShowKey]
+  );
+
+  const matchedTvShowKey = matchedTvShow?.["@key"] ?? tvShowKey;
+  const { data: tvShow, isLoading: isLoadingTvShow } =
+    useTvShow(matchedTvShowKey);
+
+  if (isLoadingTvShows || isLoadingTvShow) return <Loading />;
   if (!tvShow) return null;
 
   return (
     <EditTvShowFormInner
-      tvShowKey={tvShowKey}
+      tvShowKey={matchedTvShowKey}
       initialData={{
         title: tvShow.title,
         description: tvShow.description ?? "",

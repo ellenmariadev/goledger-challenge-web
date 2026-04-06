@@ -9,9 +9,10 @@ import { AlertDialog } from "@/shared/ui/AlertDialog";
 import { Button } from "@/shared/ui/Button";
 import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
-import { useToast } from "@/shared/ui/Toast";
+import { useToast } from "@/shared/providers/Toast";
 import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { normalizeString } from "@/shared/utils/normalizeString";
+import { createSlug } from "@/shared/utils/slug";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -55,6 +56,7 @@ export default function Catalog() {
   const router = useRouter();
   const toast = useToast();
   const { mutateAsync: deleteTvShow } = useDeleteTvShow();
+  const TV_SHOW_SLUG_OPTIONS = { fallback: "tv-shows" };
 
   const columnCount = useColumnCount(scrollRef);
 
@@ -156,7 +158,9 @@ export default function Catalog() {
                       recommendedAge={tvShow.recommendedAge}
                       tvShowKey={tvShow["@key"]}
                       onEdit={() =>
-                        router.push(`/tv-shows/${tvShow["@key"]}/edit`)
+                        router.push(
+                          `/tv-shows/${createSlug(tvShow.title, tvShow["@key"], TV_SHOW_SLUG_OPTIONS)}/edit`
+                        )
                       }
                       onDelete={() =>
                         setPendingDelete({

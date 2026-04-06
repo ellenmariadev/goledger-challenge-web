@@ -7,7 +7,7 @@ import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
 import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { findWatchlistBySlug } from "@/shared/utils/watchlistSlug";
+import { findBySlug } from "@/shared/utils/slug";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -21,7 +21,7 @@ export function WatchlistDetail({ slug }: { slug: string }) {
   const { data: allShows = [] } = useReadAllTvShows();
 
   const matchedWatchlist = useMemo(
-    () => findWatchlistBySlug(watchlists, slug),
+    () => findBySlug(watchlists, slug),
     [watchlists, slug]
   );
 

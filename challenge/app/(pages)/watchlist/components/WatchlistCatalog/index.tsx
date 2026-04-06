@@ -6,7 +6,7 @@ import { useDeleteWatchlist, useWatchlists } from "@/shared/hooks/useWatchlist";
 import { Button } from "@/shared/ui/Button";
 import { Loading } from "@/shared/ui/Loading";
 import { Text } from "@/shared/ui/Text";
-import { createWatchlistSlug } from "@/shared/utils/watchlistSlug";
+import { createSlug } from "@/shared/utils/slug";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import styles from "./watchlistCatalog.module.css";
@@ -17,6 +17,8 @@ export function WatchlistCatalog() {
     useWatchlists();
   const { data: allShows = [], isLoading: loadingShows } = useReadAllTvShows();
   const { mutateAsync: deleteWatchlistAsync } = useDeleteWatchlist();
+
+  const WATCHLIST_SLUG_OPTIONS = { fallback: "watchlist" };
 
   const showsByKey = useMemo(
     () => new Map(allShows.map((show) => [show["@key"], show])),
@@ -49,18 +51,12 @@ export function WatchlistCatalog() {
             showsByKey={showsByKey}
             onOpen={() =>
               router.push(
-                `/watchlist/${createWatchlistSlug(
-                  watchlist.title,
-                  watchlist["@key"]
-                )}`
+                `/watchlist/${createSlug(watchlist.title, watchlist["@key"], WATCHLIST_SLUG_OPTIONS)}`
               )
             }
             onEdit={() =>
               router.push(
-                `/watchlist/${createWatchlistSlug(
-                  watchlist.title,
-                  watchlist["@key"]
-                )}/edit`
+                `/watchlist/${createSlug(watchlist.title, watchlist["@key"], WATCHLIST_SLUG_OPTIONS)}/edit`
               )
             }
             onDelete={() => deleteWatchlistAsync({ key: watchlist["@key"] })}
