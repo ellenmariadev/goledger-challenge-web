@@ -1,6 +1,8 @@
 import { api } from "@/services/api";
+import { deleteAsset } from "@/services/delete";
 import type {
   CreateSeasonInput,
+  DeleteSeasonInput,
   SeasonAsset,
   SeasonUpdateAsset,
   UpdateSeasonInput,
@@ -43,4 +45,8 @@ export async function updateSeason({ key, number, year, tvShowKey }: UpdateSeaso
     method: "PUT",
     body: { update },
   });
+}
+
+export async function deleteSeason({ key }: DeleteSeasonInput) {
+  return deleteAsset("seasons", key);
 }

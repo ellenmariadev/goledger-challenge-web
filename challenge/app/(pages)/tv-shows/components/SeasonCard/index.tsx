@@ -1,9 +1,14 @@
 "use client";
 
+import { InitialsPreview } from "@/shared/components/InitialsPreview";
+import { useDeleteSeason } from "@/shared/hooks/useSeasons";
+import { AlertDialog } from "@/shared/ui/AlertDialog";
 import Menu from "@/shared/ui/Menu";
 import { Text } from "@/shared/ui/Text";
-import { InitialsPreview } from "@/shared/components/InitialsPreview";
+import { useToast } from "@/shared/ui/Toast";
+import { getErrorMessage } from "@/shared/utils/errorMessage";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import styles from "./seasonCard.module.css";
 
 type Season = {
@@ -15,6 +20,9 @@ type Season = {
 
 export function SeasonCard({ season }: { season: Season }) {
   const router = useRouter();
+  const toast = useToast();
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const { mutateAsync: deleteSeasonAsync } = useDeleteSeason();
 
   const menuContent = [
     {
@@ -22,7 +30,7 @@ export function SeasonCard({ season }: { season: Season }) {
       onClick: () =>
         router.push(`/tv-shows/season/${encodeURIComponent(season.key)}/edit`),
     },
-    { label: "Delete", onClick: () => console.log("delete", season.key) },
+    { label: "Delete", onClick: () => setConfirmDeleteOpen(true) },
   ];
 
   return (
@@ -45,6 +53,29 @@ export function SeasonCard({ season }: { season: Season }) {
           {season.episodeCount} episodes
         </Text>
       </div>
+
+      <AlertDialog
+        open={confirmDeleteOpen}
+        onOpenChange={setConfirmDeleteOpen}
+        title="Delete"
+        description={`\"${season.name}\" season will be permanently removed.`}
+        confirmLabel="delete"
+        variant="danger"
+        onConfirm={async () => {
+          try {
+            await deleteSeasonAsync({ key: season.key });
+            setConfirmDeleteOpen(false);
+          } catch (error) {
+            toast.add({
+              title: "Delete failed",
+              description: getErrorMessage(error).error,
+              type: "error",
+              priority: "high",
+              timeout: 5000,
+            });
+          }
+        }}
+      />
     </article>
   );
 }

@@ -33,3 +33,11 @@ export type UpdateSeasonInput = {
   year?: number;
   tvShowKey?: string;
 };
+
+export type DeleteSeasonInput = {
+  key: string;
+};
+
+export type DeleteSeasonOptions = {
+  onSuccess?: () => void | Promise<void>;
+};
