@@ -73,19 +73,21 @@ export function WatchlistDetail({ slug }: { slug: string }) {
             )}
           </div>
 
-          <Menu
-            title={watchlist.title}
-            content={[
-              {
-                label: "Edit",
-                onClick: () => router.push(`/watchlist/${slug}/edit`),
-              },
-              {
-                label: "Delete",
-                onClick: () => setConfirmOpen(true),
-              },
-            ]}
-          />
+          <div className={styles.menu}>
+            <Menu
+              title={watchlist.title}
+              content={[
+                {
+                  label: "Edit",
+                  onClick: () => router.push(`/watchlist/${slug}/edit`),
+                },
+                {
+                  label: "Delete",
+                  onClick: () => setConfirmOpen(true),
+                },
+              ]}
+            />
+          </div>
         </header>
 
         <div className={styles.grid}>
